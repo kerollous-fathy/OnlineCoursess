@@ -41,15 +41,15 @@ namespace OnlineCourses.Models
         public string ConfirmPassword { get; set; } = default!;
 
 
-        public string Phone { get; set; }
+        public string Phone { get; set; } = "";
         public DateTime DateJoined { get; set; }
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = "";
 
-        public string ProfileImage { get; set; }
+        public string ProfileImage { get; set; } = "";
         public string Biography { get; set; }
         public string Certification { get; set; }
 
         // Navigation
-        public ICollection<Course> CreatedCourses { get; set; }
+        public ICollection<Course> CreatedCourses { get; set; } = new List<Course>();
     }
 }
