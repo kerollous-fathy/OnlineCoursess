@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="Views\Instructor\" />
-    <Folder Include="Views\Student\" />
+    <Folder Include="Views\instuctor\" />
+    <Folder Include="Views\student\" />
+
   </ItemGroup>
 
   <ItemGroup>
