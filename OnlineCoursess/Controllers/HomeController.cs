@@ -1,32 +1,37 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using OnlineCoursess.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using OnlineCourses.ViewModels;
+using OnlineCoursess.Context;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace OnlineCoursess.Controllers
+namespace OnlineCourses.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        MyContext db = new MyContext();
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var viewModel = new LandingPageViewModel();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            // 1. جلب الدورات (FeaturedCourses)
+            viewModel.FeaturedCourses = db.Courses
+                // Include: لجلب بيانات المدرب (Instructor) في نفس الاستعلام
+                .Include(c => c.Instructor)
+                // Include: لجلب التقييمات (Reviews) لحساب المتوسط
+                .Include(c => c.Reviews)
+                .OrderByDescending(c => c.CreatedAt) // ترتيب حسب الأحدث
+                .Take(6) // عرض أول 6 دورات
+                .ToList();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            // 2. جلب المدربين (Top Instructors)
+            viewModel.TopInstructors = db.Instructors
+                .Take(4)
+                .ToList();
+
+            // إرسال سلة البيانات (الـ ViewModel) إلى الـ View
+            return View(viewModel);
         }
     }
 }
