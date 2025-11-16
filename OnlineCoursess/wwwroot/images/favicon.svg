@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Simplified infinity symbol with graduation cap for favicon -->
+  <circle cx="24" cy="20" r="8" fill="#0000FF"/>
+  <!-- Graduation cap -->
+  <path d="M 18 16 L 30 16 L 31 13 L 17 13 Z" fill="#0000FF"/>
+  
+  <!-- Right person -->
+  <circle cx="40" cy="20" r="8" fill="#0000FF"/>
+  
+  <!-- Infinity symbol -->
+  <path d="M 24 26 Q 15 32 15 40 Q 15 48 24 54 Q 32 48 32 40 Z" 
+        fill="#0000FF"/>
+  <path d="M 40 26 Q 49 32 49 40 Q 49 48 40 54 Q 32 48 32 40 Z" 
+        fill="#0000FF"/>
+</svg>
