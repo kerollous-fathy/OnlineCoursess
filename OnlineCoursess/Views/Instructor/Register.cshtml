@@ -1,0 +1,111 @@
+@model Instructor
+
+@{
+    ViewData["Title"] = "????? ????? ????";
+}
+
+<div class="auth-container">
+    <div class="auth-wrapper">
+        <div class="auth-box">
+            <div class="auth-header">
+                <h1 class="auth-title">????? ???? ?????</h1>
+                <p class="auth-subtitle">???? ?????? ????? ????? ???????</p>
+            </div>
+
+            <form asp-action="Register" asp-controller="Instructor" method="post" class="auth-form">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                <!-- First Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="FirstName" class="form-label">????? ?????</label>
+                    <input asp-for="FirstName" class="form-control" placeholder="???? ???? ?????">
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+
+                <!-- Middle Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="MiddleName" class="form-label">????? ??????</label>
+                    <input asp-for="MiddleName" class="form-control" placeholder="???? ???? ??????">
+                    <span asp-validation-for="MiddleName" class="text-danger small"></span>
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group mb-3">
+                    <label asp-for="LastName" class="form-label">????? ??????</label>
+                    <input asp-for="LastName" class="form-control" placeholder="???? ???? ??????">
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group mb-3">
+                    <label asp-for="Email" class="form-label">?????? ??????????</label>
+                    <input asp-for="Email" class="form-control" placeholder="???? ????? ??????????">
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group mb-3">
+                    <label asp-for="Phone" class="form-label">??? ??????</label>
+                    <input asp-for="Phone" class="form-control" placeholder="???? ??? ?????">
+                    <span asp-validation-for="Phone" class="text-danger small"></span>
+                </div>
+
+                <!-- Biography -->
+                <div class="form-group mb-3">
+                    <label asp-for="Biography" class="form-label">???? ???</label>
+                    <textarea asp-for="Biography" class="form-control" rows="3" placeholder="?????? ?? ?????? ????????? ???? ??????"></textarea>
+                    <span asp-validation-for="Biography" class="text-danger small"></span>
+                </div>
+
+                <!-- Certification -->
+                <div class="form-group mb-3">
+                    <label asp-for="Certification" class="form-label">???????</label>
+                    <textarea asp-for="Certification" class="form-control" rows="3" placeholder="???? ??????? ???????? ????????? ???? ???????"></textarea>
+                    <span asp-validation-for="Certification" class="text-danger small"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group mb-3">
+                    <label asp-for="Password" class="form-label">???? ??????</label>
+                    <input asp-for="Password" class="form-control" placeholder="???? ???? ?????? (6 ???? ??? ?????)">
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group mb-4">
+                    <label asp-for="ConfirmPassword" class="form-label">????? ???? ??????</label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="??? ????? ???? ??????">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-register-instructor-submit w-100 mb-3">????? ??????</button>
+
+                <!-- Login Link -->
+                <div class="auth-footer">
+                    <p class="mb-0">?? ???? ???? ??????? 
+                        <a asp-action="Login" asp-controller="Instructor" class="auth-link">????? ??????</a>
+                    </p>
+                </div>
+
+                <!-- Divider -->
+                <div class="auth-divider mt-3 mb-3">
+                    <span>??</span>
+                </div>
+
+                <!-- Register as Student Link -->
+                <div class="text-center">
+                    <p class="mb-0">?? ???? ???????? 
+                        <a asp-action="Register" asp-controller="Student" class="auth-link-student">????? ?????</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
