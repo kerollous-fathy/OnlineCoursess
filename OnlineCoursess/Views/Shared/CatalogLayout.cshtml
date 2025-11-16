@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Online Course Catalog</title>
+
+    {{/* 💡 ربط Bootstrap و Font Awesome للتصميم */}}
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        body {
+            background-color: #f7f9fc;
+        }
+
+        .main-content {
+            padding-top: 20px;
+            padding-bottom: 50px;
+            min-height: 85vh; 
+        }
+
+        .catalog-header {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="bg-white shadow-sm border-bottom">
+        <div class="container d-flex justify-content-between align-items-center py-3">
+
+            @* 💡 زر العودة للصفحة الرئيسية *@
+            <a asp-controller="Home" asp-action="Index" class="text-decoration-none h4 m-0 text-dark">
+                <i class="fas fa-arrow-right me-2"></i> العودة للصفحة الرئيسية
+            </a>
+
+            <div class="d-flex align-items-center">
+                @* 💡 عرض اسم المستخدم المسجل دخوله *@
+                <span class="text-secondary me-3">مرحبًا، @User.Identity.Name</span>
+
+                @* 🛑 زر تسجيل الخروج (تم حذفه بناءً على طلبك) *
+                <a asp-controller="Student" asp-action="Logout" class="btn btn-sm btn-outline-danger">تسجيل الخروج</a> *@
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <div class="catalog-header text-center">
+            <h1 class="display-4">@ViewData["Title"]</h1>
+            <p class="lead">استكشف جميع الدورات المتاحة وابدأ رحلتك التعليمية.</p>
+        </div>
+
+        @* 💡 مكان عرض محتوى View/Course/Index.cshtml *@
+        @RenderBody()
+    </div>
+
+    <footer class="border-top footer text-muted text-center py-3 bg-white">
+        &copy; @DateTime.Now.Year - منصة الدورات التعليمية
+    </footer>
+
+    @* 💡 ملفات الـ JavaScript الضرورية *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

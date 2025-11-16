@@ -1,8 +1,8 @@
-@model OnlineCourses.Models.Student
+@model OnlineCoursess.ViewModels.LoginViewModel
 
 @{
     ViewData["Title"] = "Student Login";
-    // ?? ????? ??? Navbar ???? Footer
+    // Removing Navbar and Footer
     Layout = null;
 }
 
@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Online Courses Platform</title>
 
-    {{/* ?? ????? ??? CSS */}}
+    @* CSS links *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
@@ -28,6 +28,10 @@
                 </div>
 
                 <form asp-action="Login" asp-controller="Student" method="post" class="auth-form">
+
+                    @* ?? ADDING ANTI-FORGERY TOKEN (CRITICAL FIX) *@
+                    @Html.AntiForgeryToken()
+
                     @* Display general validation/login failure errors *@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
@@ -74,7 +78,7 @@
         </div>
     </div>
 
-    {{/* ?? ????? ??? JavaScript */}}
+    @* JavaScript *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
