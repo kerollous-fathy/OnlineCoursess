@@ -1,32 +1,34 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using OnlineCoursess.Models;
+using Microsoft.EntityFrameworkCore;
+using OnlineCourses.ViewModels;
+using OnlineCoursess.Context;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace OnlineCoursess.Controllers
+namespace OnlineCourses.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+        MyContext db = new MyContext();
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var viewModel = new LandingPageViewModel();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            viewModel.FeaturedCourses = db.Courses
+                .Include(c => c.Instructor)
+                .Include(c => c.Reviews)
+                .OrderByDescending(c => c.CreatedAt)
+                .Take(6)
+                .ToList();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+            viewModel.TopInstructors = db.Instructors
+                .Take(4)
+                .ToList();
+
+
+            return View(viewModel);
         }
     }
 }
