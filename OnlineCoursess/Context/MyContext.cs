@@ -165,21 +165,46 @@ namespace OnlineCoursess.Context
 
             var contents = new List<LessonContent>()
             {
-                // Content for Lesson 1 (MVC) - (ContentId: 1 موجود سابقاً)
-                new LessonContent { LessonContentId = 1, LessonId = 1, ContentUrl = "https://youtube.com/mvc-intro", ContentType = "Video", OrderIndex = 1, Duration = 15 },
-                new LessonContent { LessonContentId = 2, LessonId = 1, ContentUrl = "/files/mvc-slides.pdf", ContentType = "PDF", OrderIndex = 2, Duration = 5 },
+                // Content for Lesson 1 (MVC Structure)
+                new LessonContent {
+                 LessonContentId = 1, LessonId = 1,
+                 Title = "Module 1 Introduction Video", // 💡 إضافة العنوان
+                 ContentUrl = "https://youtube.com/mvc-intro", ContentType = "Video", OrderIndex = 1, Duration = 15
+                },
+
+                new LessonContent {
+                  LessonContentId = 2, LessonId = 1,
+                  Title = "Setup Environment Checklist", // 💡 إضافة العنوان
+                  ContentUrl = "/files/mvc-slides.pdf", ContentType = "PDF", OrderIndex = 2, Duration = 5
+                },
 
                 // Content for Lesson 2 (MVC Controllers)
-                new LessonContent { LessonContentId = 3, LessonId = 2, ContentUrl = "https://vimeo.com/controllers-guide", ContentType = "Video", OrderIndex = 1, Duration = 25 },
+                new LessonContent {
+                LessonContentId = 3, LessonId = 2,
+                Title = "Deep Dive into Controllers", // 💡 إضافة العنوان
+                ContentUrl = "https://vimeo.com/controllers-guide", ContentType = "Video", OrderIndex = 1, Duration = 25
+                },
     
                 // Content for Lesson 3 (Figma Prototyping)
-                new LessonContent { LessonContentId = 4, LessonId = 3, ContentUrl = "https://youtube.com/figma-proto", ContentType = "Video", OrderIndex = 1, Duration = 15 },
+                new LessonContent {
+                LessonContentId = 4, LessonId = 3,
+                Title = "Figma Basics Demo", // 💡 إضافة العنوان
+                ContentUrl = "https://youtube.com/figma-proto", ContentType = "Video", OrderIndex = 1, Duration = 15 
+                },
     
                 // Content for Lesson 5 (Python Setup)
-                new LessonContent { LessonContentId = 5, LessonId = 5, ContentUrl = "/guides/python-setup.html", ContentType = "Text", OrderIndex = 1, Duration = 10 },
+                new LessonContent {
+                LessonContentId = 5, LessonId = 5,
+                Title = "Installation Guide (Text)", // 💡 إضافة العنوان
+                ContentUrl = "/guides/python-setup.html", ContentType = "Text", OrderIndex = 1, Duration = 10 
+                },
     
                 // Content for Lesson 7 (SEO)
-                new LessonContent { LessonContentId = 6, LessonId = 7, ContentUrl = "https://coursematerials.com/seo-guide", ContentType = "PDF", OrderIndex = 1, Duration = 20 }
+                new LessonContent {
+                LessonContentId = 6, LessonId = 7,
+                Title = "Keyword Research PDF Guide", // 💡 إضافة العنوان
+                ContentUrl = "https://coursematerials.com/seo-guide", ContentType = "PDF", OrderIndex = 1, Duration = 20 
+                }
             };
             modelBuilder.Entity<LessonContent>().HasData(contents);
 

@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - تفاصيل الدورة</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        /* تنسيقات خاصة بصفحة تفاصيل الدورة */
+        body {
+            background-color: #e9ecef; /* خلفية فاتحة */
+        }
+
+        .course-header {
+            background-color: #343a40; /* شريط علوي داكن */
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 25px;
+        }
+
+        .course-info-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .main-content {
+            padding-bottom: 50px;
+        }
+
+        .sticky-top {
+            top: 20px; /* لإعطاء مسافة من أعلى */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="course-header shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            @* 💡 زر العودة للكتالوج *@
+            <a asp-controller="Course" asp-action="Index" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-arrow-right me-2"></i> العودة للكتالوج
+            </a>
+
+            @* عرض عنوان الصفحة *@
+            <span class="h5 m-0">@ViewData["Title"]</span>
+
+            @* 🛑 تم حذف زر تسجيل الخروج *@
+        </div>
+    </header>
+
+    <div class="container main-content">
+        @RenderBody()
+    </div>
+
+    <footer class="border-top footer text-muted text-center py-3 bg-white">
+        &copy; @DateTime.Now.Year - منصة الدورات التعليمية
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

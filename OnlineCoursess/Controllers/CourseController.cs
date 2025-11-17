@@ -51,54 +51,5 @@ namespace OnlineCourses.Controllers
 
             return View(course); // Passes the detailed Course Model to View/Course/Details.cshtml
         }
-
-        // -------------------------------------------------------------------
-        // 3. Enroll - Handles course enrollment (after assumed successful payment)
-        // -------------------------------------------------------------------
-        [HttpPost]
-        public IActionResult Enroll(int courseId)
-        {
-            // 1. Authentication Check: Ensure the user is logged in
-            if (!User.Identity.IsAuthenticated)
-            {
-                // Redirects to the login page defined in Program.cs
-                return RedirectToAction("Login", "Student");
-            }
-
-            // 2. 🔑 Retrieve Student ID from the Authentication Claim
-            // We rely on StudentId being stored in ClaimTypes.NameIdentifier during Login
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Validate the extracted ID
-            if (userIdString == null || !int.TryParse(userIdString, out int currentStudentId))
-            {
-                // If the identity is missing or corrupted
-                return Unauthorized();
-            }
-
-            // 3. Check for duplicate enrollment (Business Logic)
-            bool alreadyEnrolled = db.Enrolls.Any(e => e.CourseId == courseId && e.StudentId == currentStudentId);
-
-            if (alreadyEnrolled)
-            {
-                // Return to the details page with a message if already enrolled
-                return RedirectToAction(nameof(Details), new { id = courseId, message = "AlreadyEnrolled" });
-            }
-
-            // 4. Create new enrollment record
-            var newEnrollment = new Enroll
-            {
-                StudentId = currentStudentId, // The ID extracted from the Claim
-                CourseId = courseId,
-                EnrolledAt = DateTime.Now,
-                Progress = 0 // Start progress at zero
-            };
-
-            db.Enrolls.Add(newEnrollment);
-            db.SaveChanges();
-
-            // 5. Redirect to the content page to start learning
-            return RedirectToAction("ViewCourse", "Student", new { id = courseId });
-        }
     }
 }

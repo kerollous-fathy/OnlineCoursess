@@ -117,35 +117,46 @@ namespace OnlineCourses.Controllers
         [HttpGet]
         public IActionResult ViewCourse(int id)
         {
+            // 1. Authentication Check: التأكد من تسجيل الدخول
             if (!User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Student");
             }
 
-            var studentIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (studentIdString == null || !int.TryParse(studentIdString, out int currentStudentId))
+            // 2. الحصول على ID الطالب الحالي
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userIdString == null || !int.TryParse(userIdString, out int currentStudentId))
             {
                 return Unauthorized();
             }
 
+            // 3. Enrollment Check: التأكد من أن الطالب مشترك بالفعل
             bool isEnrolled = db.Enrolls.Any(e => e.CourseId == id && e.StudentId == currentStudentId);
 
             if (!isEnrolled)
             {
-                return RedirectToAction("Details", "Course", new { id = id, message = "AccessDenied" });
+                // إذا لم يكن مشتركًا، يتم إرجاعه إلى صفحة التفاصيل (للاشتراك والدفع)
+                return RedirectToAction("Details", "Course", new { id = id, message = "NotEnrolled" });
             }
 
+
+            // 4. 📚 Eager Loading: جلب الدورة وعلاقاتها (الحل لخطأ NullReferenceException)
             var courseContent = db.Courses
+                // 💡 جلب بيانات المدرب (Instructor)
+                .Include(c => c.Instructor)
+
+                // 💡 جلب قائمة الدروس (Lessons)
                 .Include(c => c.Lessons)
+                    // 💡 جلب محتوى كل درس (Contents)
                     .ThenInclude(l => l.Contents)
+
+                // 💡 جلب الدورة المطلوبة
                 .FirstOrDefault(c => c.CourseId == id);
 
             if (courseContent == null)
             {
                 return NotFound();
             }
-
             return View(courseContent);
         }
     }

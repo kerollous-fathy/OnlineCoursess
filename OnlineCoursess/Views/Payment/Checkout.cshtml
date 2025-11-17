@@ -1,0 +1,65 @@
+﻿@model OnlineCoursess.ViewModels.PaymentViewModel
+
+@{
+    ViewData["Title"] = "إتمام الدفع";
+    Layout = "~/Views/Shared/CheckoutLayout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg p-4">
+                <h2 class="card-title text-center mb-4">إتمام الدفع الآمن</h2>
+                <h5 class="text-center text-muted mb-4">لشراء دورة: @ViewData["CourseTitle"] - @ViewData["Price"]$</h5>
+                <hr />
+
+                @* 💡 الفورم يرسل البيانات إلى ProcessPayment في PaymentController *@
+                <form asp-controller="Payment" asp-action="ProcessPayment" method="post">
+
+                    @* عرض أخطاء التحقق من الصحة *@
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    @* 💡 حقل مخفي لتمرير CourseId *@
+                    <input type="hidden" asp-for="CourseId" />
+
+                    <div class="form-group mb-3">
+                        <label asp-for="CardHolderName" class="form-label">اسم حامل البطاقة</label>
+                        <input asp-for="CardHolderName" class="form-control" placeholder="الاسم كما يظهر على البطاقة">
+                        <span asp-validation-for="CardHolderName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="CardNumber" class="form-label">رقم البطاقة</label>
+                        <input asp-for="CardNumber" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+                        <span asp-validation-for="CardNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ExpiryDate" class="form-label">تاريخ الانتهاء (MM/YY)</label>
+                            <input asp-for="ExpiryDate" class="form-control" placeholder="MM/YY">
+                            <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CVV" class="form-label">رمز CVV</label>
+                            <input asp-for="CVV" class="form-control" placeholder="XXX">
+                            <span asp-validation-for="CVV" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    @* 💡 زر الدفع *@
+                    <button type="submit" class="btn btn-success w-100 mt-4">ادفع الآن</button>
+                    @Html.AntiForgeryToken()
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

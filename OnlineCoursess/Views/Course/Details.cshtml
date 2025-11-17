@@ -1,0 +1,123 @@
+﻿@model OnlineCourses.Models.Course
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/DetailsLayout.cshtml";
+
+    // 💡 يمكن هنا إضافة منطق لتحديد ما إذا كان الطالب مشتركًا بالفعل (غير مفعل الآن)
+    bool isStudentAlreadyEnrolled = false;
+}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+            <h1 class="display-5 mb-3">@Model.Title</h1>
+
+            <p class="lead text-muted">
+                <i class="fas fa-chalkboard-teacher me-2"></i> المدرب: @Model.Instructor?.FirstName @Model.Instructor?.LastName
+            </p>
+            <hr />
+
+            <h2>وصف الدورة</h2>
+            <p>@Model.Description</p>
+
+            @* 💡 عرض رسائل التقييم وعدد المراجعات *@
+            @if (Model.Reviews != null && Model.Reviews.Any())
+            {
+                <h5 class="text-warning">★ ★ ★ ★ ☆ (@Model.Reviews.Count() مراجعة)</h5>
+            }
+
+
+            <h3 class="mt-5">محتويات الدورة والدروس (@Model.Lessons.Count() درس)</h3>
+
+            @if (Model.Lessons != null && Model.Lessons.Any())
+            {
+                <div class="accordion" id="lessonsAccordion">
+                    @* 💡 التكرار على الدروس *@
+                    @foreach (var lesson in Model.Lessons.OrderBy(l => l.OrderIndex))
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading_@lesson.LessonId">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@lesson.LessonId" aria-expanded="false">
+                                    @lesson.OrderIndex. - @lesson.Title
+                                    <span class="badge bg-secondary ms-auto">@lesson.Duration دقائق</span>
+                                </button>
+                            </h2>
+                            <div id="collapse_@lesson.LessonId" class="accordion-collapse collapse" data-bs-parent="#lessonsAccordion">
+                                <div class="accordion-body">
+                                    @* 💡 التكرار على محتوى الدرس (LessonContent) *@
+                                    @if (lesson.Contents != null && lesson.Contents.Any())
+                                    {
+                                        <ul class="list-group list-group-flush">
+                                            @foreach (var content in lesson.Contents.OrderBy(c => c.OrderIndex))
+                                            {
+                                                <li class="list-group-item d-flex justify-content-between small text-muted">
+                                                    @content.Title (@content.ContentType)
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p class="small text-muted">لا يوجد محتوى لهذا الدرس.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="alert alert-warning">لم يتم إضافة دروس بعد لهذه الدورة.</p>
+            }
+
+            @* 💡 قسم التقييمات (آراء الطلاب) *@
+            <h3 class="mt-5">آراء وتقييمات الطلاب (@Model.Reviews.Count() مراجعة)</h3>
+            <p class="text-muted">هنا يتم عرض متوسط التقييمات الفعلية.</p>
+
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card position-sticky top-0 sticky-top mt-md-0 mt-4 shadow">
+                @* 💡 صورة الدورة (ثابتة مؤقتاً) *@
+                <img src="~/images/courses/course-hero.jpg" class="card-img-top" alt="Course Image">
+
+                <div class="card-body">
+
+                    <h2 class="card-title text-success mb-3">السعر: $@Model.Price</h2>
+
+                    @if (isStudentAlreadyEnrolled)
+                    {
+                        <h2 class="card-title text-success mb-3">أنت مشترك بالفعل!</h2>
+                        <a asp-action="ViewCourse" asp-controller="Student" asp-route-id="@Model.CourseId" class="btn btn-primary w-100 btn-lg mb-3">
+                            متابعة الدورة
+                        </a>
+                    }
+                    else
+                    {
+                        @* 🎯 التعديل الجوهري: ربط زر الاشتراك بصفحة الدفع (Checkout) *@
+                        <a asp-action="Checkout" asp-controller="Payment" asp-route-courseId="@Model.CourseId" class="btn btn-success w-100 btn-lg mb-3">
+                            اشترك الآن وابدأ التعلم
+                        </a>
+                    }
+
+
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock me-2 text-primary"></i> المدة الكلية: @Model.Duration ساعات</li>
+                        <li><i class="fas fa-chart-line me-2 text-primary"></i> المستوى: @Model.Level</li>
+                        <li><i class="fas fa-tag me-2 text-primary"></i> التصنيف: @Model.Category.CategoryName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
