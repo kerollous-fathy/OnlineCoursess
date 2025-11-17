@@ -13,23 +13,22 @@ namespace OnlineCourses.Controllers
 
         public IActionResult Index()
         {
-            _logger = logger;
-        }
+            var viewModel = new LandingPageViewModel();
 
-        public IActionResult Index()
-        {
-            return View();
-        }
+            viewModel.FeaturedCourses = db.Courses
+                .Include(c => c.Instructor)
+                .Include(c => c.Reviews)
+                .OrderByDescending(c => c.CreatedAt)
+                .Take(6)
+                .ToList();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            viewModel.TopInstructors = db.Instructors
+                .Take(4)
+                .ToList();
+
+
+            return View(viewModel);
         }
     }
 }
