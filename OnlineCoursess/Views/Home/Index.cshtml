@@ -1,4 +1,5 @@
-﻿@{
+﻿@model OnlineCourses.ViewModels.LandingPageViewModel
+@{
     ViewData["Title"] = "الصفحة الرئيسية";
 }
 
@@ -46,8 +47,8 @@
                         <h1 class="hero-title">أفضل فرص للتعلم<br />بين يديك!</h1>
                         <p class="hero-subtitle">ابدأ رحلتك التعليمية اليوم.. وتعلم مهارات تغير مستقبلك.</p>
                         <div class="hero-buttons">
-                            <a href="#" class="btn btn-primary btn-lg">انضم الآن</a>
-                            <a href="#" class="btn btn-outline-primary btn-lg">انضم كمحاضر</a>
+                            <a asp-controller="Student" asp-action="Register" class="btn btn-dark btn-lg"> انضم كطالب</a>
+                            <a asp-controller="Instructor" asp-action="Register" class="btn btn-outline-dark btn-lg">انضم كمحاضر</a>
                         </div>
                     </div>
                 </div>

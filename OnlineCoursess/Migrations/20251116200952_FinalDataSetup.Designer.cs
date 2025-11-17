@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineCoursess.Context;
 
@@ -11,9 +12,11 @@ using OnlineCoursess.Context;
 namespace OnlineCoursess.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20251116200952_FinalDataSetup")]
+    partial class FinalDataSetup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -446,10 +449,6 @@ namespace OnlineCoursess.Migrations
                     b.Property<int>("OrderIndex")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("LessonContentId");
 
                     b.HasIndex("LessonId");
@@ -464,8 +463,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "https://youtube.com/mvc-intro",
                             Duration = 15,
                             LessonId = 1,
-                            OrderIndex = 1,
-                            Title = "Module 1 Introduction Video"
+                            OrderIndex = 1
                         },
                         new
                         {
@@ -474,8 +472,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "/files/mvc-slides.pdf",
                             Duration = 5,
                             LessonId = 1,
-                            OrderIndex = 2,
-                            Title = "Setup Environment Checklist"
+                            OrderIndex = 2
                         },
                         new
                         {
@@ -484,8 +481,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "https://vimeo.com/controllers-guide",
                             Duration = 25,
                             LessonId = 2,
-                            OrderIndex = 1,
-                            Title = "Deep Dive into Controllers"
+                            OrderIndex = 1
                         },
                         new
                         {
@@ -494,8 +490,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "https://youtube.com/figma-proto",
                             Duration = 15,
                             LessonId = 3,
-                            OrderIndex = 1,
-                            Title = "Figma Basics Demo"
+                            OrderIndex = 1
                         },
                         new
                         {
@@ -504,8 +499,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "/guides/python-setup.html",
                             Duration = 10,
                             LessonId = 5,
-                            OrderIndex = 1,
-                            Title = "Installation Guide (Text)"
+                            OrderIndex = 1
                         },
                         new
                         {
@@ -514,8 +508,7 @@ namespace OnlineCoursess.Migrations
                             ContentUrl = "https://coursematerials.com/seo-guide",
                             Duration = 20,
                             LessonId = 7,
-                            OrderIndex = 1,
-                            Title = "Keyword Research PDF Guide"
+                            OrderIndex = 1
                         });
                 });
 

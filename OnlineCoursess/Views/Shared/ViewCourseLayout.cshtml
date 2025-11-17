@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - مشاهدة الدورة</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        /* تنسيقات Layout المشاهدة */
+        body {
+            background-color: #f8f9fa; /* خلفية نظيفة */
+        }
+
+        .main-viewer-content {
+            padding: 0;
+        }
+
+        .course-viewer-header {
+            background-color: #212529; /* لون داكن للرأس */
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .viewer-container {
+            /* إزالة الهوامش الجانبية للاستفادة من كامل الشاشة */
+            max-width: 100%;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        /* لإبقاء التنسيق متوازناً بعد حذف زر الخروج */
+        .header-placeholder {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="course-viewer-header">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            @* 💡 زر العودة للكتالوج *@
+            <a asp-controller="Course" asp-action="Index" class="btn btn-outline-light btn-sm">
+                <i class="fas fa-arrow-right me-2"></i> العودة للكتالوج
+            </a>
+
+            @* 💡 عنوان الدورة الحالي *@
+            <h5 class="m-0 text-truncate" style="max-width: 60%;">@ViewData["Title"]</h5>
+
+            @* 🛑 تم حذف زر الخروج هنا، ونضيف عنصر وهمي للحفاظ على التوازن *@
+            <div class="header-placeholder"></div>
+
+        </div>
+    </header>
+
+    <div class="container-fluid main-viewer-content">
+        @* 💡 هنا يتم عرض محتوى ViewCourse.cshtml *@
+        @RenderBody()
+    </div>
+
+    @* 🛑 تم إزالة Footer هنا *@
+
+    @* ملفات الـ JavaScript الضرورية *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,75 +1,87 @@
-@model Student
+@model OnlineCoursess.ViewModels.LoginViewModel
 
 @{
-    ViewData["Title"] = "????? ???? ??????";
+    ViewData["Title"] = "Student Login";
+    // Removing Navbar and Footer
+    Layout = null;
 }
 
-<div class="auth-container">
-    <div class="auth-wrapper">
-        <div class="auth-box auth-box-login">
-            <div class="auth-header">
-                <h1 class="auth-title">????? ??????</h1>
-                <p class="auth-subtitle">????? ?? ?? ?????? ?????????</p>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Online Courses Platform</title>
+
+    @* CSS links *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-wrapper">
+            <div class="auth-box auth-box-login">
+                <div class="auth-header">
+                    <h1 class="auth-title">Welcome Back</h1>
+                    <p class="auth-subtitle">Sign in to continue your learning journey.</p>
+                </div>
+
+                <form asp-action="Login" asp-controller="Student" method="post" class="auth-form">
+
+                    @* ?? ADDING ANTI-FORGERY TOKEN (CRITICAL FIX) *@
+                    @Html.AntiForgeryToken()
+
+                    @* Display general validation/login failure errors *@
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label">Email Address</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email address">
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="form-label">Password</label>
+                        <input asp-for="Password" class="form-control" placeholder="Enter your password">
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">
+                            Remember Me
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-login-submit w-100 mb-3">Login</button>
+
+                    <div class="auth-footer">
+                        <p class="mb-0">
+                            Don't have an account?
+                            <a asp-action="Register" asp-controller="Student" class="auth-link">Register New Account</a>
+                        </p>
+                    </div>
+
+                    <div class="auth-divider mt-3 mb-3">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0">
+                            Are you an Instructor?
+                            <a asp-action="Login" asp-controller="Instructor" class="auth-link-instructor">Login as Instructor</a>
+                        </p>
+                    </div>
+                </form>
             </div>
-
-            <form asp-action="Login" asp-controller="Student" method="post" class="auth-form">
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
-                <!-- Email -->
-                <div class="form-group mb-3">
-                    <label asp-for="Email" class="form-label">?????? ??????????</label>
-                    <input asp-for="Email" class="form-control" placeholder="???? ????? ??????????">
-                    <span asp-validation-for="Email" class="text-danger small"></span>
-                </div>
-
-                <!-- Password -->
-                <div class="form-group mb-4">
-                    <label asp-for="Password" class="form-label">???? ??????</label>
-                    <input asp-for="Password" class="form-control" placeholder="???? ???? ??????">
-                    <span asp-validation-for="Password" class="text-danger small"></span>
-                </div>
-
-                <!-- Remember Me -->
-                <div class="form-check mb-4">
-                    <input class="form-check-input" type="checkbox" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">
-                        ?????? ?? ????? ???????
-                    </label>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-login-submit w-100 mb-3">????</button>
-
-                <!-- Register Link -->
-                <div class="auth-footer">
-                    <p class="mb-0">??? ???? ????? 
-                        <a asp-action="Register" asp-controller="Student" class="auth-link">???? ???? ????</a>
-                    </p>
-                </div>
-
-                <!-- Forgot Password Link -->
-                <div class="text-center mb-3">
-                    <a href="#" class="auth-link-secondary">?? ???? ???? ???????</a>
-                </div>
-
-                <!-- Divider -->
-                <div class="auth-divider mt-3 mb-3">
-                    <span>??</span>
-                </div>
-
-                <!-- Login as Instructor Link -->
-                <div class="text-center">
-                    <p class="mb-0">?? ??? ?????? 
-                        <a asp-action="Login" asp-controller="Instructor" class="auth-link-instructor">???? ?????????</a>
-                    </p>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+    @* JavaScript *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+</body>
+</html>

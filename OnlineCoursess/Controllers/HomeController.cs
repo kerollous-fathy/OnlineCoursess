@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineCourses.ViewModels;
 using OnlineCoursess.Context;
@@ -13,22 +13,23 @@ namespace OnlineCourses.Controllers
 
         public IActionResult Index()
         {
-            var viewModel = new LandingPageViewModel();
+            _logger = logger;
+        }
 
-            viewModel.FeaturedCourses = db.Courses
-                .Include(c => c.Instructor)
-                .Include(c => c.Reviews)
-                .OrderByDescending(c => c.CreatedAt)
-                .Take(6)
-                .ToList();
+        public IActionResult Index()
+        {
+            return View();
+        }
 
+        public IActionResult Privacy()
+        {
+            return View();
+        }
 
-            viewModel.TopInstructors = db.Instructors
-                .Take(4)
-                .ToList();
-
-
-            return View(viewModel);
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

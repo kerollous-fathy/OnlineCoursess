@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - إتمام الشراء</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        /* تنسيقات Layout الدفع */
+        body {
+            background-color: #007bff; /* خلفية زرقاء جذابة */
+            background-image: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        }
+
+        .main-checkout-content {
+            min-height: 100vh; /* ملء كامل الشاشة */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkout-header {
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="checkout-header">
+        <h3 class="m-0">منصة الدورات التعليمية</h3>
+    </header>
+
+    <div class="container main-checkout-content">
+        @RenderBody()
+    </div>
+
+    @* 🛑 لا يوجد تذييل (Footer) لتجنب التشتيت *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

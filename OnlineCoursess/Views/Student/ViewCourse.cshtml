@@ -1,0 +1,100 @@
+﻿@model OnlineCourses.Models.Course
+
+@{
+    ViewData["Title"] = "عرض الدورة: " + Model.Title;
+    Layout = "~/Views/Shared/ViewCourseLayout.cshtml";
+}
+
+<style>
+    /* تنسيقات أساسية للوحة العرض */
+    .course-viewer-container {
+        max-width: 95%;
+    }
+
+    .lesson-content-area {
+        min-height: 500px;
+        padding: 20px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: white;
+    }
+
+    .sticky-top {
+        top: 20px;
+    }
+</style>
+
+<div class="course-viewer-container mt-4">
+    <div class="row">
+
+        <div class="col-lg-3 col-md-4">
+            <div class="card shadow-sm sticky-top">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">محتويات الدورة</h5>
+                    <small>@Model.Lessons.Count() درس</small>
+                </div>
+                <div class="list-group list-group-flush" id="lessonList">
+
+                    @* 💡 التكرار على الدروس *@
+                    @foreach (var lesson in Model.Lessons.OrderBy(l => l.OrderIndex))
+                    {
+                        <a href="#" class="list-group-item list-group-item-action lesson-item" data-lesson-id="@lesson.LessonId">
+                            <i class="fas fa-play-circle me-2"></i>
+                            @lesson.OrderIndex. @lesson.Title
+                            <span class="badge bg-success ms-auto">@lesson.Duration دقيقة</span>
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9 col-md-8">
+
+            <h1 class="mb-3">@Model.Title</h1>
+            <p class="lead">المدرب: @Model.Instructor.FirstName @Model.Instructor.LastName</p>
+            <hr>
+
+            <div class="lesson-content-area" id="contentViewer">
+                @* 💡 يتم عرض محتوى الدرس الأول افتراضياً *@
+                @if (Model.Lessons.Any())
+                {
+                    var firstLesson = Model.Lessons.OrderBy(l => l.OrderIndex).FirstOrDefault();
+                    var firstContent = firstLesson?.Contents.OrderBy(c => c.OrderIndex).FirstOrDefault();
+
+                    if (firstContent != null)
+                    {
+                        <h3>@firstContent.Title</h3>
+                        <p class="text-muted small">النوع: @firstContent.ContentType | المدة: @firstContent.Duration دقيقة</p>
+
+                        <div class="embed-responsive embed-responsive-16by9">
+                            @* مثال: استخدام IFrame لعرض فيديو (تم تعديل الرابط ليتوافق مع embed) *@
+                            <iframe class="embed-responsive-item w-100" height="400"
+                                    src="@firstContent.ContentUrl.Replace("youtube.com/watch?v=", "youtube.com/embed/")"
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
+
+                        @* 🛑 تم حذف زر "تحديد كمحتوى مُكتمل" هنا بناءً على طلبك *@
+                    }
+                    else
+                    {
+                        <p class="text-danger">لا يوجد محتوى لهذا الدرس.</p>
+                    }
+                }
+                else
+                {
+                    <p class="text-danger">لا توجد دروس حالياً في هذه الدورة.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 💡 هنا يمكن إضافة كود JavaScript/AJAX لتحميل محتوى الدرس عند النقر على الشريط الجانبي
+        $(document).ready(function () {
+            // الكود يمكن أن يُضاف هنا لاحقاً
+        });
+    </script>
+}

@@ -1,0 +1,188 @@
+﻿@model OnlineCourses.Models.Course
+
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Views/Shared/DetailsLayout.cshtml"; 
+    bool isStudentAlreadyEnrolled = false;
+
+    // لحساب متوسط التقييم
+    var avgRating = Model.Reviews != null && Model.Reviews.Any()
+        ? Model.Reviews.Average(r => r.Rating)
+        : 0;
+}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-lg-8">
+            <h1 class="display-5 mb-3">@Model.Title</h1>
+
+            <p class="lead text-muted">
+                <i class="fas fa-chalkboard-teacher me-2"></i> المدرب: @Model.Instructor?.FirstName @Model.Instructor?.LastName
+            </p>
+            <hr />
+
+            <h2>وصف الدورة</h2>
+            <p>@Model.Description</p>
+
+            @* 💡 عرض متوسط التقييم بالنجوم وعدد المراجعات *@
+            @if (Model.Reviews != null && Model.Reviews.Any())
+            {
+                <h5 class="text-warning">
+                    @* عرض النجوم (تقريب لأقرب رقم صحيح) *@
+                    @for (int i = 0; i < (int)Math.Round(avgRating); i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    (@Model.Reviews.Count() مراجعة)
+                </h5>
+            }
+
+
+            <h3 class="mt-5">محتويات الدورة والدروس (@Model.Lessons.Count() درس)</h3>
+
+            @if (Model.Lessons != null && Model.Lessons.Any())
+            {
+                <div class="accordion" id="lessonsAccordion">
+                    @* التكرار على الدروس *@
+                    @foreach (var lesson in Model.Lessons.OrderBy(l => l.OrderIndex))
+                    {
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading_@lesson.LessonId">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_@lesson.LessonId" aria-expanded="false">
+                                    @lesson.OrderIndex. - @lesson.Title
+                                    <span class="badge bg-secondary ms-auto">@lesson.Duration دقائق</span>
+                                </button>
+                            </h2>
+                            <div id="collapse_@lesson.LessonId" class="accordion-collapse collapse" data-bs-parent="#lessonsAccordion">
+                                <div class="accordion-body">
+                                    @* التكرار على محتوى الدرس (LessonContent) *@
+                                    @if (lesson.Contents != null && lesson.Contents.Any())
+                                    {
+                                        <ul class="list-group list-group-flush">
+                                            @foreach (var content in lesson.Contents.OrderBy(c => c.OrderIndex))
+                                            {
+                                                <li class="list-group-item d-flex justify-content-between small text-muted">
+                                                    @content.Title (@content.ContentType)
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p class="small text-muted">لا يوجد محتوى لهذا الدرس.</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="alert alert-warning">لم يتم إضافة دروس بعد لهذه الدورة.</p>
+            }
+
+            @* 💡 قسم عرض التقييمات الفعلية *@
+            <h3 class="mt-5">آراء وتقييمات الطلاب (@Model.Reviews.Count() مراجعة)</h3>
+            <hr />
+
+            @if (Model.Reviews.Any())
+            {
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="card mb-2 p-3">
+                        @* 💡 عرض اسم الطالب (يعمل بفضل التعديل في دالة Details بالكنترولر) *@
+                        <h5 class="card-title">@review.Student?.FirstName @review.Student?.LastName</h5>
+                        <div class="text-warning small mb-1">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                        </div>
+                        <p class="card-text small">@review.Comment</p>
+                        <small class="text-muted">تاريخ: @review.CreatedAt.ToShortDateString()</small>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="alert alert-info">كن أول من يقيّم هذه الدورة.</p>
+            }
+
+
+            @* 🎯 نموذج إضافة تقييم Student SubmitReview Form *@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card p-4 mt-4">
+                    <h4>أضف تقييمك</h4>
+
+                    <form asp-action="SubmitReview" asp-controller="Course" method="post">
+
+                        @* حقل مخفي لتمرير CourseId *@
+                        <input type="hidden" name="CourseId" value="@Model.CourseId" />
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            <label for="Rating" class="form-label">التقييم (1-5 نجوم)</label>
+                            <input type="number" name="Rating" min="1" max="5" class="form-control w-25" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Comment" class="form-label">تعليقك (اختياري)</label>
+                            <textarea name="Comment" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">إرسال التقييم</button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info mt-4">
+                    الرجاء <a asp-controller="Student" asp-action="Login">تسجيل الدخول</a> لتقديم تقييمك.
+                </div>
+            }
+
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card position-sticky top-0 sticky-top mt-md-0 mt-4 shadow">
+                <img src="~/images/courses/course-hero.jpg" class="card-img-top" alt="Course Image">
+
+                <div class="card-body">
+
+                    <h2 class="card-title text-success mb-3">السعر: $@Model.Price</h2>
+
+                    @if (isStudentAlreadyEnrolled)
+                    {
+                        <h2 class="card-title text-success mb-3">أنت مشترك بالفعل!</h2>
+                        <a asp-action="ViewCourse" asp-controller="Student" asp-route-id="@Model.CourseId" class="btn btn-primary w-100 btn-lg mb-3">
+                            متابعة الدورة
+                        </a>
+                    }
+                    else
+                    {
+                        <a asp-action="Checkout" asp-controller="Payment" asp-route-courseId="@Model.CourseId" class="btn btn-success w-100 btn-lg mb-3">
+                            اشترك الآن وابدأ التعلم
+                        </a>
+                    }
+
+
+                    <ul class="list-unstyled small">
+                        <li><i class="fas fa-clock me-2 text-primary"></i> المدة الكلية: @Model.Duration ساعات</li>
+                        <li><i class="fas fa-chart-line me-2 text-primary"></i> المستوى: @Model.Level</li>
+                        <li><i class="fas fa-tag me-2 text-primary"></i> التصنيف: @Model.Category.CategoryName</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

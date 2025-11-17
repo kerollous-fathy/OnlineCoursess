@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineCoursess.Context;
 
@@ -11,9 +12,11 @@ using OnlineCoursess.Context;
 namespace OnlineCoursess.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20251116164651_UpdateInstructorModelFixes")]
+    partial class UpdateInstructorModelFixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,54 +114,6 @@ namespace OnlineCoursess.Migrations
                             Level = "Intermediate",
                             Price = 49.99m,
                             Title = "ASP.NET MVC Web Development"
-                        },
-                        new
-                        {
-                            CourseId = 2,
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 12, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Master modern design principles and prototyping for mobile and web.",
-                            Duration = 15,
-                            InstructorId = 2,
-                            Level = "Advanced",
-                            Price = 79.00m,
-                            Title = "Advanced UI/UX Design with Figma"
-                        },
-                        new
-                        {
-                            CourseId = 3,
-                            CategoryId = 1,
-                            CreatedAt = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Foundational course covering Pandas, NumPy, and basic ML algorithms.",
-                            Duration = 30,
-                            InstructorId = 1,
-                            Level = "Beginner",
-                            Price = 99.00m,
-                            Title = "Introduction to Data Science (Python)"
-                        },
-                        new
-                        {
-                            CourseId = 4,
-                            CategoryId = 3,
-                            CreatedAt = new DateTime(2024, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Learn SEO, content, and social media marketing techniques.",
-                            Duration = 10,
-                            InstructorId = 3,
-                            Level = "Beginner",
-                            Price = 39.99m,
-                            Title = "Digital Marketing & SEO Strategies"
-                        },
-                        new
-                        {
-                            CourseId = 5,
-                            CategoryId = 2,
-                            CreatedAt = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Comprehensive guide to vector graphics and illustration techniques.",
-                            Duration = 25,
-                            InstructorId = 2,
-                            Level = "Intermediate",
-                            Price = 55.00m,
-                            Title = "Adobe Illustrator Mastery"
                         });
                 });
 
@@ -199,32 +154,8 @@ namespace OnlineCoursess.Migrations
                             EnrollId = 1,
                             CourseId = 1,
                             EnrolledAt = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Progress = 100,
+                            Progress = 25,
                             StudentId = 1
-                        },
-                        new
-                        {
-                            EnrollId = 2,
-                            CourseId = 2,
-                            EnrolledAt = new DateTime(2024, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Progress = 50,
-                            StudentId = 1
-                        },
-                        new
-                        {
-                            EnrollId = 3,
-                            CourseId = 1,
-                            EnrolledAt = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Progress = 80,
-                            StudentId = 2
-                        },
-                        new
-                        {
-                            EnrollId = 4,
-                            CourseId = 3,
-                            EnrolledAt = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Progress = 0,
-                            StudentId = 2
                         });
                 });
 
@@ -296,34 +227,6 @@ namespace OnlineCoursess.Migrations
                             PasswordHash = "hashed_pass_inst",
                             Phone = "01012345678",
                             ProfileImage = "/images/instructor/hassan.jpg"
-                        },
-                        new
-                        {
-                            InstructorId = 2,
-                            Biography = "Expert UI/UX Designer and Prototyping Specialist.",
-                            Certification = "Certified Figma Designer",
-                            DateJoined = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "nora.mousa@platform.com",
-                            FirstName = "Nora",
-                            LastName = "Mousa",
-                            MiddleName = "Adel",
-                            PasswordHash = "hashed_nora",
-                            Phone = "01198765432",
-                            ProfileImage = "/images/instructor/nora.jpg"
-                        },
-                        new
-                        {
-                            InstructorId = 3,
-                            Biography = "Seasoned Business Analyst and Project Manager.",
-                            Certification = "PMP Certified",
-                            DateJoined = new DateTime(2024, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "karim.fouad@platform.com",
-                            FirstName = "Karim",
-                            LastName = "Fouad",
-                            MiddleName = "Yasser",
-                            PasswordHash = "hashed_karim",
-                            Phone = "01555544433",
-                            ProfileImage = "/images/instructor/karim.jpg"
                         });
                 });
 
@@ -362,62 +265,6 @@ namespace OnlineCoursess.Migrations
                             Duration = 45,
                             OrderIndex = 1,
                             Title = "Introduction to MVC Structure"
-                        },
-                        new
-                        {
-                            LessonId = 2,
-                            CourseId = 1,
-                            Duration = 60,
-                            OrderIndex = 2,
-                            Title = "Understanding Controllers and Views"
-                        },
-                        new
-                        {
-                            LessonId = 3,
-                            CourseId = 2,
-                            Duration = 30,
-                            OrderIndex = 1,
-                            Title = "Figma Prototyping Basics"
-                        },
-                        new
-                        {
-                            LessonId = 4,
-                            CourseId = 2,
-                            Duration = 50,
-                            OrderIndex = 2,
-                            Title = "Advanced Component Creation"
-                        },
-                        new
-                        {
-                            LessonId = 5,
-                            CourseId = 3,
-                            Duration = 40,
-                            OrderIndex = 1,
-                            Title = "Setting up Python Environment"
-                        },
-                        new
-                        {
-                            LessonId = 6,
-                            CourseId = 3,
-                            Duration = 70,
-                            OrderIndex = 2,
-                            Title = "Data Cleaning with Pandas"
-                        },
-                        new
-                        {
-                            LessonId = 7,
-                            CourseId = 4,
-                            Duration = 55,
-                            OrderIndex = 1,
-                            Title = "Intro to SEO and Keyword Research"
-                        },
-                        new
-                        {
-                            LessonId = 8,
-                            CourseId = 5,
-                            Duration = 45,
-                            OrderIndex = 1,
-                            Title = "Vector Basics and Tools"
                         });
                 });
 
@@ -446,10 +293,6 @@ namespace OnlineCoursess.Migrations
                     b.Property<int>("OrderIndex")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("LessonContentId");
 
                     b.HasIndex("LessonId");
@@ -461,61 +304,10 @@ namespace OnlineCoursess.Migrations
                         {
                             LessonContentId = 1,
                             ContentType = "Video",
-                            ContentUrl = "https://youtube.com/mvc-intro",
+                            ContentUrl = "https://youtube.com/intro-mvc",
                             Duration = 15,
                             LessonId = 1,
-                            OrderIndex = 1,
-                            Title = "Module 1 Introduction Video"
-                        },
-                        new
-                        {
-                            LessonContentId = 2,
-                            ContentType = "PDF",
-                            ContentUrl = "/files/mvc-slides.pdf",
-                            Duration = 5,
-                            LessonId = 1,
-                            OrderIndex = 2,
-                            Title = "Setup Environment Checklist"
-                        },
-                        new
-                        {
-                            LessonContentId = 3,
-                            ContentType = "Video",
-                            ContentUrl = "https://vimeo.com/controllers-guide",
-                            Duration = 25,
-                            LessonId = 2,
-                            OrderIndex = 1,
-                            Title = "Deep Dive into Controllers"
-                        },
-                        new
-                        {
-                            LessonContentId = 4,
-                            ContentType = "Video",
-                            ContentUrl = "https://youtube.com/figma-proto",
-                            Duration = 15,
-                            LessonId = 3,
-                            OrderIndex = 1,
-                            Title = "Figma Basics Demo"
-                        },
-                        new
-                        {
-                            LessonContentId = 5,
-                            ContentType = "Text",
-                            ContentUrl = "/guides/python-setup.html",
-                            Duration = 10,
-                            LessonId = 5,
-                            OrderIndex = 1,
-                            Title = "Installation Guide (Text)"
-                        },
-                        new
-                        {
-                            LessonContentId = 6,
-                            ContentType = "PDF",
-                            ContentUrl = "https://coursematerials.com/seo-guide",
-                            Duration = 20,
-                            LessonId = 7,
-                            OrderIndex = 1,
-                            Title = "Keyword Research PDF Guide"
+                            OrderIndex = 1
                         });
                 });
 
@@ -564,27 +356,7 @@ namespace OnlineCoursess.Migrations
                             PaymentDate = new DateTime(2024, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = "Paid",
                             StudentId = 1,
-                            TransactionId = "TRX1"
-                        },
-                        new
-                        {
-                            PaymentId = 2,
-                            Amount = 79.00m,
-                            CourseId = 2,
-                            PaymentDate = new DateTime(2024, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = "Paid",
-                            StudentId = 1,
-                            TransactionId = "TRX2"
-                        },
-                        new
-                        {
-                            PaymentId = 3,
-                            Amount = 49.99m,
-                            CourseId = 1,
-                            PaymentDate = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = "Paid",
-                            StudentId = 2,
-                            TransactionId = "TRX3"
+                            TransactionId = "TRX123456"
                         });
                 });
 
@@ -624,28 +396,10 @@ namespace OnlineCoursess.Migrations
                         new
                         {
                             ReviewId = 1,
-                            Comment = "Excellent course structure!",
+                            Comment = "Great introduction to MVC!",
                             CourseId = 1,
                             CreatedAt = new DateTime(2024, 12, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Rating = 5,
-                            StudentId = 1
-                        },
-                        new
-                        {
-                            ReviewId = 2,
-                            Comment = "Very clear explanation, highly recommend.",
-                            CourseId = 1,
-                            CreatedAt = new DateTime(2024, 12, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rating = 4,
-                            StudentId = 2
-                        },
-                        new
-                        {
-                            ReviewId = 3,
-                            Comment = "Good content but needs more practical examples.",
-                            CourseId = 2,
-                            CreatedAt = new DateTime(2024, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Rating = 3,
                             StudentId = 1
                         });
                 });
@@ -712,19 +466,6 @@ namespace OnlineCoursess.Migrations
                             PasswordHash = "hashed_pass_std",
                             Phone = "01234567890",
                             ProfileImage = "/images/student/sara.jpg"
-                        },
-                        new
-                        {
-                            StudentId = 2,
-                            BirthDay = new DateTime(2001, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateJoined = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "ahmed.m@example.com",
-                            FirstName = "Ahmed",
-                            LastName = "Mourad",
-                            MiddleName = "Khaled",
-                            PasswordHash = "hashed_ahmed",
-                            Phone = "01000000000",
-                            ProfileImage = "/images/student/ahmed.jpg"
                         });
                 });
 
