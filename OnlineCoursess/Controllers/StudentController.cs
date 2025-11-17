@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineCourses.Models;
@@ -158,6 +159,40 @@ namespace OnlineCourses.Controllers
                 return NotFound();
             }
             return View(courseContent);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult MyCourses()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdString, out int currentStudentId))
+            {
+                return RedirectToAction("Login", "Student");
+            }
+
+            // 🛑 التصحيح: يجب تطبيق Include مباشرة على db.Enrolls لجلب العلاقة أولاً
+
+            var enrolledCourses = db.Enrolls
+                .Where(e => e.StudentId == currentStudentId)
+
+                // 1. Include Course, Instructor, Category, etc.
+                // يجب أن نبدأ بتحميل كل ما نحتاجه من العلاقات الداخلية لـ Enroll
+                .Include(e => e.Course) // Include the main Course object
+                    .ThenInclude(c => c.Instructor) // Drill down to Instructor
+                .Include(e => e.Course) // Include Course again
+                    .ThenInclude(c => c.Category) // Drill down to Category
+                .Include(e => e.Course) // Include Course again
+                    .ThenInclude(c => c.Reviews) // Drill down to Reviews
+
+                // 2. 💡 بعد تحميل كل شيء، نستخدم Select لاختيار Course فقط
+                .Select(e => e.Course)
+                .ToList();
+
+            ViewData["Title"] = "كورساتي المشترك بها";
+
+            // 3. نستخدم نفس الـ View لعرض الكتالوج
+            return View("~/Views/Course/Index.cshtml", enrolledCourses);
         }
     }
 }

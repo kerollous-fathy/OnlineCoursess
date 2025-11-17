@@ -5,8 +5,29 @@
     Layout = "~/Views/Shared/CatalogLayout.cshtml";
 }
 
-<h1 class="text-center mb-4">All Available Courses</h1>
-<hr />
+<div class="container my-4">
+
+    @* 💡 منطقة زر كورساتي (يظهر فقط للمسجلين دخولهم) *@
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="d-flex justify-content-center mb-4">
+            <div class="btn-group" role="group">
+                @* زر كل الدورات (يربط بدالة Index الحالية) *@
+                <a asp-controller="Course" asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="fas fa-list me-2"></i> All Courses
+                </a>
+
+                @* 🎯 زر كورساتي (يربط بالدالة الجديدة) *@
+                <a asp-controller="Student" asp-action="MyCourses" class="btn btn-primary">
+                    <i class="fas fa-book-open me-2"></i> My Enrolled Courses
+                </a>
+            </div>
+        </div>
+    }
+
+    <h1 class="text-center mb-4">@ViewData["Title"]</h1>
+    <hr />
+</div>
 
 <div class="row">
     @if (Model == null || !Model.Any())
