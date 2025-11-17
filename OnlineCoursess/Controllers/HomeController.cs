@@ -18,16 +18,16 @@ namespace OnlineCourses.Controllers
             viewModel.FeaturedCourses = db.Courses
                 .Include(c => c.Instructor)
                 .Include(c => c.Reviews)
-                .OrderByDescending(c => c.CreatedAt) 
-                .Take(6) 
+                .OrderByDescending(c => c.CreatedAt)
+                .Take(6)
                 .ToList();
 
-            
+
             viewModel.TopInstructors = db.Instructors
                 .Take(4)
                 .ToList();
 
-            
+
             return View(viewModel);
         }
     }

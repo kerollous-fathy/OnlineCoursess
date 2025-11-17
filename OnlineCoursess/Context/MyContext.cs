@@ -5,6 +5,14 @@ namespace OnlineCoursess.Context
 {
     public class MyContext : DbContext
     {
+        public MyContext(DbContextOptions<MyContext> options) : base(options)
+        {
+        }
+
+        public MyContext()
+        {
+        }
+
         // -------------------------------------------------------
 
         #region Tables 
@@ -28,9 +36,12 @@ namespace OnlineCoursess.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
-            string connectionString = "Server=DESKTOP-OMMCE3P;Database=OnlineCourses;Trusted_Connection=True;TrustServerCertificate=true";
-            optionsBuilder.UseSqlServer(connectionString);
+            if (!optionsBuilder.IsConfigured)
+            {
+                // Fallback for design-time contexts (migrations)
+                var cs = "Server=(localdb)\\MSSQLLocalDB;Database=OnlineCourses;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+                optionsBuilder.UseSqlServer(cs);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
