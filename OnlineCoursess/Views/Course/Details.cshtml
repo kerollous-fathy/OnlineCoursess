@@ -2,10 +2,13 @@
 
 @{
     ViewData["Title"] = Model.Title;
-    Layout = "~/Views/Shared/DetailsLayout.cshtml";
-
-    // 💡 يمكن هنا إضافة منطق لتحديد ما إذا كان الطالب مشتركًا بالفعل (غير مفعل الآن)
+    Layout = "~/Views/Shared/DetailsLayout.cshtml"; 
     bool isStudentAlreadyEnrolled = false;
+
+    // لحساب متوسط التقييم
+    var avgRating = Model.Reviews != null && Model.Reviews.Any()
+        ? Model.Reviews.Average(r => r.Rating)
+        : 0;
 }
 
 <div class="container mt-5">
@@ -23,10 +26,17 @@
             <h2>وصف الدورة</h2>
             <p>@Model.Description</p>
 
-            @* 💡 عرض رسائل التقييم وعدد المراجعات *@
+            @* 💡 عرض متوسط التقييم بالنجوم وعدد المراجعات *@
             @if (Model.Reviews != null && Model.Reviews.Any())
             {
-                <h5 class="text-warning">★ ★ ★ ★ ☆ (@Model.Reviews.Count() مراجعة)</h5>
+                <h5 class="text-warning">
+                    @* عرض النجوم (تقريب لأقرب رقم صحيح) *@
+                    @for (int i = 0; i < (int)Math.Round(avgRating); i++)
+                    {
+                        <i class="fas fa-star"></i>
+                    }
+                    (@Model.Reviews.Count() مراجعة)
+                </h5>
             }
 
 
@@ -35,7 +45,7 @@
             @if (Model.Lessons != null && Model.Lessons.Any())
             {
                 <div class="accordion" id="lessonsAccordion">
-                    @* 💡 التكرار على الدروس *@
+                    @* التكرار على الدروس *@
                     @foreach (var lesson in Model.Lessons.OrderBy(l => l.OrderIndex))
                     {
                         <div class="accordion-item">
@@ -47,7 +57,7 @@
                             </h2>
                             <div id="collapse_@lesson.LessonId" class="accordion-collapse collapse" data-bs-parent="#lessonsAccordion">
                                 <div class="accordion-body">
-                                    @* 💡 التكرار على محتوى الدرس (LessonContent) *@
+                                    @* التكرار على محتوى الدرس (LessonContent) *@
                                     @if (lesson.Contents != null && lesson.Contents.Any())
                                     {
                                         <ul class="list-group list-group-flush">
@@ -74,15 +84,71 @@
                 <p class="alert alert-warning">لم يتم إضافة دروس بعد لهذه الدورة.</p>
             }
 
-            @* 💡 قسم التقييمات (آراء الطلاب) *@
+            @* 💡 قسم عرض التقييمات الفعلية *@
             <h3 class="mt-5">آراء وتقييمات الطلاب (@Model.Reviews.Count() مراجعة)</h3>
-            <p class="text-muted">هنا يتم عرض متوسط التقييمات الفعلية.</p>
+            <hr />
+
+            @if (Model.Reviews.Any())
+            {
+                @foreach (var review in Model.Reviews)
+                {
+                    <div class="card mb-2 p-3">
+                        @* 💡 عرض اسم الطالب (يعمل بفضل التعديل في دالة Details بالكنترولر) *@
+                        <h5 class="card-title">@review.Student?.FirstName @review.Student?.LastName</h5>
+                        <div class="text-warning small mb-1">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                        </div>
+                        <p class="card-text small">@review.Comment</p>
+                        <small class="text-muted">تاريخ: @review.CreatedAt.ToShortDateString()</small>
+                    </div>
+                }
+            }
+            else
+            {
+                <p class="alert alert-info">كن أول من يقيّم هذه الدورة.</p>
+            }
+
+
+            @* 🎯 نموذج إضافة تقييم Student SubmitReview Form *@
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card p-4 mt-4">
+                    <h4>أضف تقييمك</h4>
+
+                    <form asp-action="SubmitReview" asp-controller="Course" method="post">
+
+                        @* حقل مخفي لتمرير CourseId *@
+                        <input type="hidden" name="CourseId" value="@Model.CourseId" />
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group mb-3">
+                            <label for="Rating" class="form-label">التقييم (1-5 نجوم)</label>
+                            <input type="number" name="Rating" min="1" max="5" class="form-control w-25" required />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="Comment" class="form-label">تعليقك (اختياري)</label>
+                            <textarea name="Comment" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-warning">إرسال التقييم</button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info mt-4">
+                    الرجاء <a asp-controller="Student" asp-action="Login">تسجيل الدخول</a> لتقديم تقييمك.
+                </div>
+            }
 
         </div>
 
         <div class="col-lg-4">
             <div class="card position-sticky top-0 sticky-top mt-md-0 mt-4 shadow">
-                @* 💡 صورة الدورة (ثابتة مؤقتاً) *@
                 <img src="~/images/courses/course-hero.jpg" class="card-img-top" alt="Course Image">
 
                 <div class="card-body">
@@ -98,7 +164,6 @@
                     }
                     else
                     {
-                        @* 🎯 التعديل الجوهري: ربط زر الاشتراك بصفحة الدفع (Checkout) *@
                         <a asp-action="Checkout" asp-controller="Payment" asp-route-courseId="@Model.CourseId" class="btn btn-success w-100 btn-lg mb-3">
                             اشترك الآن وابدأ التعلم
                         </a>
