@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Instructor Panel</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        /* 💡 تنسيقات لوحة التحكم العصرية (Modern Dashboard) */
+        body {
+            background-color: #f4f6f9;
+            min-height: 100vh;
+        }
+
+        #app-wrapper {
+            display: flex;
+        }
+
+        #sidebar {
+            width: 250px;
+            min-width: 250px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #2c3e50; /* لون أزرق داكن */
+            color: #ffffff;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        #content-wrapper {
+            flex-grow: 1;
+            margin-left: 250px;
+            padding-top: 60px; /* ترك مسافة للـ Navbar العلوي */
+        }
+
+        .sidebar-heading {
+            padding: 1.5rem 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-item {
+            padding: 15px 20px;
+            color: #bdc3c7;
+            text-decoration: none;
+            display: block;
+            border-left: 4px solid transparent;
+            transition: all 0.2s ease-in-out;
+        }
+
+            .sidebar-item:hover, .sidebar-item.active {
+                color: #ffffff;
+                background-color: #34495e;
+                border-left-color: #3498db;
+                text-decoration: none;
+            }
+
+        .top-navbar {
+            position: fixed;
+            width: calc(100% - 250px);
+            left: 250px;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.05);
+            height: 60px;
+        }
+
+        .navbar-text { /* لضمان تنسيق Welcome */
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-wrapper">
+
+        @* 🛑 الشريط الجانبي (Sidebar) *@
+        <nav id="sidebar">
+            <div class="sidebar-heading text-center text-warning">
+                OnlineCourses 🚀
+            </div>
+
+            <div class="list-group list-group-flush mt-3">
+                <a asp-controller="Instructor" asp-action="Dashboard" class="sidebar-item active">
+                    <i class="fas fa-tachometer-alt fa-fw me-3"></i> Dashboard
+                </a>
+                <a asp-controller="Instructor" asp-action="CreateCourse" class="sidebar-item">
+                    <i class="fas fa-plus-circle fa-fw me-3"></i> Create Course
+                </a>
+                <a asp-controller="Instructor" asp-action="MyCourses" class="sidebar-item">
+                    <i class="fas fa-book fa-fw me-3"></i> Manage Courses
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="sidebar-item">
+                    <i class="fas fa-home fa-fw me-3"></i> Public Site
+                </a>
+            </div>
+
+            @* 💡 منطقة تسجيل الخروج في الأسفل *@
+            <div class="position-absolute bottom-0 w-100 p-3">
+                <form asp-controller="Instructor" asp-action="Logout" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-sm btn-outline-danger w-100">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </button>
+                </form>
+                <small class="d-block text-center text-white-50 mt-2">Logged in as: @User.Identity.Name</small>
+            </div>
+        </nav>
+
+        @* 🛑 المحتوى الرئيسي (Main Content) *@
+        <div id="content-wrapper">
+
+            @* 💡 شريط التنقل العلوي (Top Navbar) *@
+            <nav class="top-navbar navbar navbar-light d-flex align-items-center">
+                <div class="d-flex justify-content-between align-items-center w-100 px-4">
+
+                    @* 💡 عنوان الصفحة (للوصول السريع للـ Dashboard) *@
+                    <a asp-controller="Instructor" asp-action="Dashboard" class="navbar-brand text-dark fw-bold">
+                        <i class="fas fa-chart-bar me-2"></i> Instructor Dashboard
+                    </a>
+
+                    <div class="navbar-text">
+                        <span class="text-secondary fw-bold me-2">Welcome, @User.Identity.Name</span>
+                        <i class="fas fa-user-circle fa-2x text-secondary"></i>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="p-4">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    @* 💡 ملفات الـ JavaScript الضرورية *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

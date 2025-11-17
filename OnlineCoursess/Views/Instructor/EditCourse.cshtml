@@ -1,0 +1,94 @@
+﻿@model OnlineCoursess.ViewModels.CourseViewModel
+
+@{
+    // جلب CourseId الذي تم تمريره من الـ Controller في EditCourse (GET)
+    var courseId = (int)ViewData["CourseId"];
+    ViewData["Title"] = (string)ViewData["Title"];
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+
+            <h1 class="display-5 mb-4">
+                <i class="fas fa-edit me-2 text-warning"></i> @ViewData["Title"]
+            </h1>
+            <p class="lead text-muted">Update the details, price, and category of your course below.</p>
+            <hr class="mb-5" />
+
+            @* 💡 الفورم يرسل البيانات إلى EditCourse (POST) مع تمرير ID الدورة *@
+            <form asp-controller="Instructor" asp-action="EditCourse" asp-route-id="@courseId" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-4"></div>
+
+                @* === 1. حقل العنوان (Title) === *@
+                <div class="mb-4">
+                    <label asp-for="Title" class="form-label fw-bold"></label>
+                    <input asp-for="Title" class="form-control form-control-lg" />
+                    <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
+
+                @* === 2. حقل الوصف (Description) === *@
+                <div class="mb-4">
+                    <label asp-for="Description" class="form-label fw-bold"></label>
+                    <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="row">
+                    @* === 3. حقل السعر (Price) === *@
+                    <div class="col-md-4 mb-4">
+                        <label asp-for="Price" class="form-label fw-bold"></label>
+                        <input asp-for="Price" type="number" step="0.01" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+
+                    @* === 4. حقل المدة (Duration) === *@
+                    <div class="col-md-4 mb-4">
+                        <label asp-for="Duration" class="form-label fw-bold"></label>
+                        <input asp-for="Duration" type="number" class="form-control" />
+                        <span asp-validation-for="Duration" class="text-danger small"></span>
+                    </div>
+
+                    @* === 5. حقل المستوى (Level) === *@
+                    <div class="col-md-4 mb-4">
+                        <label asp-for="Level" class="form-label fw-bold"></label>
+                        <select asp-for="Level" class="form-select">
+                            <option value="">-- Select Level --</option>
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                        <span asp-validation-for="Level" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                @* === 6. قائمة التصنيفات (Category Dropdown) === *@
+                <div class="mb-5">
+                    <label asp-for="CategoryId" class="form-label fw-bold"></label>
+                    @* 💡 الـ Controller قام بتعبئة CategoriesList وتحديد القيمة المختارة (Selected) *@
+                    <select asp-for="CategoryId" class="form-select" asp-items="@Model.CategoriesList">
+                        <option value="">-- Select Category --</option>
+                    </select>
+                    <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-warning btn-lg text-dark">
+                        <i class="fas fa-save me-2"></i> Save Changes
+                    </button>
+                    <a asp-controller="Instructor" asp-action="MyCourses" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-undo me-2"></i> Cancel
+                    </a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

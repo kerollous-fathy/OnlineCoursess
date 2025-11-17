@@ -1,0 +1,83 @@
+﻿@model IEnumerable<OnlineCourses.Models.Course> 
+@{
+    ViewData["Title"] = "Instructor Dashboard";
+    Layout = "~/Views/Shared/DashboardLayout.cshtml";
+}
+
+<div class="container-fluid mt-4"> 
+    @* 💡 إزالة كلاس text-center من هذا الـ div ليصبح المحتوى محاذيًا لليسار *
+    
+    @* === 1. قسم الترحيب الرئيسي (Top Header) === *@
+    <div class="mb-5 text-center">
+        <h1 class="display-4">Welcome, @User.Identity.Name!</h1>
+        <p class="lead text-muted">Here you can manage your existing courses and create new ones.</p>
+    </div>
+    
+    <hr class="mb-5"/>
+
+    @* === 2. شريط الإحصائيات (KPIs - Mock Data) === *@
+    <h2 class="text-secondary mb-4">Performance Snapshot</h2>
+    <div class="row mb-5">
+        
+        @* (هنا سيتم وضع بطاقات الإحصائيات الـ 3 التي ناقشناها سابقاً) *
+        <div class="col-lg-4 col-md-6 mb-3">
+            <div class="card shadow-sm border-start border-primary border-4 h-100 p-3">
+                <i class="fas fa-book fa-3x text-primary mb-2"></i>
+                <h5 class="mb-0">5 Courses</h5>
+                <small class="text-muted">Total Courses Created</small>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-3">
+            <div class="card shadow-sm border-start border-success border-4 h-100 p-3">
+                <i class="fas fa-users fa-3x text-success mb-2"></i>
+                <h5 class="mb-0">120 Enrollments</h5>
+                <small class="text-muted">Total Students</small>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-3">
+            <div class="card shadow-sm border-start border-warning border-4 h-100 p-3">
+                <i class="fas fa-star fa-3x text-warning mb-2"></i>
+                <h5 class="mb-0">4.7 / 5</h5>
+                <small class="text-muted">Average Rating</small>
+            </div>
+        </div>
+    </div>
+
+
+    @* === 3. بطاقات الإدارة السريعة (Action Cards) === *@
+    <h2 class="text-secondary mb-4">Quick Actions</h2>
+    <div class="row">
+        
+        @* بطاقة إنشاء دورة جديدة *@
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-lg h-100 border-success">
+                <div class="card-body text-center py-4">
+                    <i class="fas fa-plus-circle fa-4x text-success mb-3"></i>
+                    <h5 class="card-title">Create New Course</h5>
+                    <p class="card-text text-muted">Start building a new course curriculum and setting prices.</p>
+                    <a asp-controller="Instructor" asp-action="CreateCourse" class="btn btn-success mt-2">
+                        <i class="fas fa-plus me-2"></i> Create Course
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        @* بطاقة إدارة الدورات *@
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow-lg h-100 border-info">
+                <div class="card-body text-center py-4">
+                    <i class="fas fa-book-open fa-4x text-info mb-3"></i>
+                    <h5 class="card-title">Manage My Courses</h5>
+                    <p class="card-text text-muted">View performance, edit lessons, and manage content for your existing offerings.</p>
+                    <a asp-controller="Instructor" asp-action="MyCourses" class="btn btn-info text-white mt-2">
+                        <i class="fas fa-list me-2"></i> View All Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+</div>
