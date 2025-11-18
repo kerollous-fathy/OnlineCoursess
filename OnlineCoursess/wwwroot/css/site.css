@@ -866,3 +866,104 @@ body.page-register .auth-container { background: transparent; }
 /* Hide internal pattern + vignette layers (optional if they obscure pattern) */
 body.page-register .icon-pattern-layer,
 body.page_register .vignette-overlay { display: none !important; }
+
+/* === CLEAN REGISTER PAGE BACKGROUND (full color, no tint) === */
+body.page-register {
+  background: url('/images/patterns/back3.png') repeat fixed center center !important;
+  background-size: cover !important;
+  background-color: #ffffff !important;
+}
+
+/* Remove every overlay layer */
+body.page-register::before,
+.page-register .icon-pattern-layer,
+.page-register .vignette-overlay,
+.page-register .auth-container::before,
+.page-register .auth-container::after {
+  display: none !important;
+  background: none !important;
+  content: none !important;
+}
+
+/* Ensure container and wrapper do not add gray/white shading */
+.page-register .auth-container,
+.page-register .auth-wrapper {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+/* === Register Button Styling (uses brand colors) === */
+.btn-register-submit {
+  background: linear-gradient(90deg, var(--color-midnight-indigo), var(--color-marian));
+  color: var(--color-vanilla-cream);
+  border: none;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+  .btn-register-submit:hover {
+    background: linear-gradient(90deg, var(--color-marian), var(--color-midnight-indigo));
+    color: var(--color-bone);
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+/* === COURSE TABS (Match background & change on hover/active) === */
+.course-tabs {
+    display: inline-flex;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid var(--color-midnight-indigo);
+}
+
+.course-tab {
+    padding: 0.6rem 1.4rem;
+    background: var(--color-vanilla-cream);
+    color: var(--color-midnight-indigo);
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.course-tab:hover {
+    background: var(--color-marian);
+    color: var(--color-bone);
+}
+
+.course-tab.active {
+    background: var(--color-midnight-indigo);
+    color: var(--color-vanilla-cream);
+}
+
+/* === Course Details header box (landing style) === */
+.course-header-box {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border: 2px solid rgba(33,40,66,0.15);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 10px 30px rgba(33,40,66,0.15);
+}
+.course-header-box .course-title {
+  color: var(--color-text-primary);
+  font-weight: 800;
+}
+.course-header-box .course-subtitle {
+  color: var(--color-black-cat);
+  margin-top: .5rem;
+}
+.course-header-box::before {
+  content: '';
+  display: block;
+  width: 70px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(135deg, var(--color-midnight-indigo), var(--color-marian));
+  margin-bottom: .75rem;
+}
+

@@ -1,33 +1,65 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Online Course Catalog</title>
 
-    {{/* 💡 ربط Bootstrap و Font Awesome للتصميم */}}
+    @* 💡 ربط Bootstrap و Font Awesome للتصميم *@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
     <style>
+        /* Use landing-page brand gradient for this layout */
         body {
-            background-color: #f7f9fc;
+            background: linear-gradient(135deg, var(--color-blue-blush) 0%, var(--color-vanilla-cream) 50%, var(--color-blue-blush) 100%);
         }
 
         .main-content {
             padding-top: 20px;
             padding-bottom: 50px;
-            min-height: 85vh; 
+            min-height: 85vh;
         }
 
+        /* Header banner styled like landing hero colors */
         .catalog-header {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-            color: white;
-            padding: 40px 0;
+            background: linear-gradient(135deg, var(--color-midnight-indigo) 0%, var(--color-marian) 100%);
+            color: var(--color-vanilla-cream);
+            padding: 48px 0;
             margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(33, 40, 66, 0.15);
+        }
+
+        /* Button theming to match landing palette (scoped to this layout only) */
+        .btn.btn-primary {
+            background-color: var(--color-midnight-indigo);
+            border-color: var(--color-midnight-indigo);
+            color: var(--color-vanilla-cream);
+        }
+        .btn.btn-primary:hover {
+            background-color: var(--color-black-cat);
+            border-color: var(--color-black-cat);
+            color: var(--color-vanilla-cream);
+        }
+        .btn.btn-outline-secondary {
+            border-color: var(--color-midnight-indigo);
+            color: var(--color-midnight-indigo);
+            background-color: transparent;
+        }
+        .btn.btn-outline-secondary:hover {
+            background-color: var(--color-midnight-indigo);
+            color: var(--color-vanilla-cream);
+            border-color: var(--color-midnight-indigo);
+        }
+
+        /* Optional: soften the top header bar to match brand */
+        header.bg-white {
+            background-color: var(--color-vanilla-cream) !important;
+        }
+        footer.footer.bg-white {
+            background-color: var(--color-vanilla-cream) !important;
         }
     </style>
 </head>
@@ -45,8 +77,8 @@
                 @* 💡 عرض اسم المستخدم المسجل دخوله *@
                 <span class="text-secondary me-3">مرحبًا، @User.Identity.Name</span>
 
-                @* 🛑 زر تسجيل الخروج (تم حذفه بناءً على طلبك) *
-                <a asp-controller="Student" asp-action="Logout" class="btn btn-sm btn-outline-danger">تسجيل الخروج</a> *@
+                @* 🛑 زر تسجيل الخروج (تم حذفه بناءً على طلبك)
+                <a asp-controller="Student" asp-action="Logout" class="btn btn-sm btn-outline-danger d-none">تسجيل الخروج</a> *@
             </div>
         </div>
     </header>

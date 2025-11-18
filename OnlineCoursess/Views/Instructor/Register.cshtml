@@ -9,14 +9,41 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Online Courses Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+    body.page-register {
+    background-image: url('/images/patterns/back3.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: 'Cairo', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+
+    /* Ensure container is transparent so body background is visible */
+    .auth-container { background: transparent !important; }
+
+    /* Hide previous decorative overlays */
+    .icon-pattern-layer, .vignette-overlay { display: none !important; }
+
+    .auth-container, .auth-wrapper, .auth-box { position: relative; z-index: 1; }
+    </style>
+
 </head>
-<body>
+<body class="page-register">
     <div class="auth-container">
+        <div class="icon-pattern-layer"></div>
+        <div class="vignette-overlay"></div>
         <div class="auth-wrapper">
-            <div class="auth-box">
+            <div class="auth-box auth-box-english">
                 <div class="auth-header">
                     <h1 class="auth-title">Register as Instructor</h1>
                     <p class="auth-subtitle">Join us to share your knowledge.</p>
@@ -89,12 +116,24 @@
                             <a asp-action="Login" asp-controller="Instructor" class="auth-link">Login as Instructor</a>
                         </p>
                     </div>
+
+                    <div class="auth-divider mt-3 mb-3">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0">
+                            Looking to learn instead?
+                            <a asp-action="Register" asp-controller="Student" class="auth-link-instructor">Register as Student</a>
+                        </p>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     @await Html.PartialAsync("_ValidationScriptsPartial")
 </body>
 </html>

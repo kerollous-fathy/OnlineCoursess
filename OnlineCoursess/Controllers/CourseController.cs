@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // For .Include() and Eager Loading
 using OnlineCourses.Models;
 using OnlineCoursess.Context;
@@ -27,6 +27,7 @@ namespace OnlineCourses.Controllers
                 .Include(c => c.Reviews)     // Fetch Reviews (needed for rating calculation in View)
                 .ToList();
 
+            ViewBag.ActiveTab = "All"; // highlight All Courses tab
             return View(courses); // Passes the list to View/Course/Index.cshtml
         }
 

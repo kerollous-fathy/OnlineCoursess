@@ -1,25 +1,26 @@
-﻿@model List<OnlineCourses.Models.Course>
+@model List<OnlineCourses.Models.Course>
 
 @{
     ViewData["Title"] = "All Available Courses";
     Layout = "~/Views/Shared/CatalogLayout.cshtml";
+    var activeTab = ViewBag.ActiveTab as string ?? "All"; // default
 }
 
 <div class="container my-4">
 
-    @* 💡 منطقة زر كورساتي (يظهر فقط للمسجلين دخولهم) *@
+    @* 💡 Tabs for switching between All and Enrolled (only when signed in) *@
     @if (User.Identity.IsAuthenticated)
     {
         <div class="d-flex justify-content-center mb-4">
-            <div class="btn-group" role="group">
-                @* زر كل الدورات (يربط بدالة Index الحالية) *@
-                <a asp-controller="Course" asp-action="Index" class="btn btn-outline-secondary">
-                    <i class="fas fa-list me-2"></i> All Courses
+            <div class="course-tabs" role="tablist">
+                <a asp-controller="Student" asp-action="MyCourses"
+                   class="course-tab @(activeTab == "Enrolled" ? "active" : string.Empty)">
+                    My Enrolled Courses <i class="fas fa-book"></i>
                 </a>
 
-                @* 🎯 زر كورساتي (يربط بالدالة الجديدة) *@
-                <a asp-controller="Student" asp-action="MyCourses" class="btn btn-primary">
-                    <i class="fas fa-book-open me-2"></i> My Enrolled Courses
+                <a asp-controller="Course" asp-action="Index"
+                   class="course-tab @(activeTab == "All" ? "active" : string.Empty)">
+                    All Courses <i class="fas fa-list"></i>
                 </a>
             </div>
         </div>

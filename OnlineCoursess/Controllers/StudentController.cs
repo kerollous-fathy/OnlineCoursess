@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -190,6 +190,7 @@ namespace OnlineCourses.Controllers
                 .ToList();
 
             ViewData["Title"] = "كورساتي المشترك بها";
+            ViewBag.ActiveTab = "Enrolled"; // highlight Enrolled tab
 
             // 3. نستخدم نفس الـ View لعرض الكتالوج
             return View("~/Views/Course/Index.cshtml", enrolledCourses);
