@@ -2,8 +2,7 @@
 
 @{
     ViewData["Title"] = "New Account Registration";
-    // ?? Removing Navbar and Footer
-    Layout = null;
+    Layout = null; // standalone page without main layout
 }
 
 <!DOCTYPE html>
@@ -11,81 +10,111 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Online Courses Platform</title>
-
-    {{/* ?? Ensure links for Bootstrap and site.css are correct */}}
+    <title>@ViewData["Title"] - Courses Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+    body.page-register {
+        /* Updated to use the new background you added under wwwroot/images */
+        background-image: url('/images/patterns/back_goround.jpg');
+        background-repeat: repeat;
+        background-size: 420px;        /* adjust tile size */
+        background-position: top left;
+        background-attachment: fixed;
+        font-family: 'Cairo', sans-serif;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    /* Ensure container is transparent so body background is visible */
+    .auth-container { background: transparent !important; }
+
+    /* Hide previous decorative overlays */
+    .icon-pattern-layer, .vignette-overlay { display: none !important; }
+
+    /* Optional: soft white overlay for readability */
+    body.page-register::before {
+        content: "";
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 0;
+    }
+
+    .auth-container, .auth-wrapper, .auth-box { position: relative; z-index: 1; }
+    </style>
+
 </head>
-<body>
+<body class="page-register">
 
     <div class="auth-container">
+        <div class="icon-pattern-layer"></div>
+        <div class="vignette-overlay"></div>
         <div class="auth-wrapper">
-            <div class="auth-box">
+            <div class="auth-box auth-box-english">
                 <div class="auth-header">
                     <h1 class="auth-title">New Account Registration</h1>
                     <p class="auth-subtitle">Start your learning journey with us</p>
                 </div>
 
-                @* ?? The form is linked to the Register(POST) action in StudentController *@
                 <form asp-action="Register" asp-controller="Student" method="post" class="auth-form">
-                    @* Display general validation errors *@
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                     <div class="form-group mb-3">
                         <label asp-for="FirstName" class="form-label">First Name</label>
-                        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name">
+                        <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" />
                         <span asp-validation-for="FirstName" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="MiddleName" class="form-label">Middle Name</label>
-                        <input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name">
+                        <input asp-for="MiddleName" class="form-control" placeholder="Enter your middle name" />
                         <span asp-validation-for="MiddleName" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="LastName" class="form-label">Last Name</label>
-                        <input asp-for="LastName" class="form-control" placeholder="Enter your last name">
+                        <input asp-for="LastName" class="form-control" placeholder="Enter your last name" />
                         <span asp-validation-for="LastName" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="Email" class="form-label">Email Address</label>
-                        <input asp-for="Email" class="form-control" placeholder="Enter your email address">
+                        <input asp-for="Email" class="form-control" placeholder="Enter your email address" />
                         <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="Phone" class="form-label">Phone Number</label>
-                        <input asp-for="Phone" class="form-control" placeholder="Enter your phone number">
+                        <input asp-for="Phone" class="form-control" placeholder="Enter your phone number" />
                         <span asp-validation-for="Phone" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="BirthDay" class="form-label">Date of Birth</label>
-                        <input asp-for="BirthDay" type="date" class="form-control">
+                        <input asp-for="BirthDay" type="date" class="form-control" />
                         <span asp-validation-for="BirthDay" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-3">
                         <label asp-for="Password" class="form-label">Password</label>
-                        <input asp-for="Password" class="form-control" placeholder="Enter password">
+                        <input asp-for="Password" class="form-control" placeholder="Choose a strong password" />
                         <span asp-validation-for="Password" class="text-danger small"></span>
                     </div>
 
                     <div class="form-group mb-4">
                         <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Re-enter password">
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="Retype your password" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-register-submit w-100 mb-3">Register Account</button>
+                    <button type="submit" class="btn btn-register-submit w-100 mb-3">Create Account</button>
 
                     <div class="auth-footer">
                         <p class="mb-0">
                             Already have an account?
-                            <a asp-action="Login" asp-controller="Student" class="auth-link">Login</a>
+                            <a asp-action="Login" asp-controller="Student" class="auth-link">Log In</a>
                         </p>
                     </div>
 
@@ -95,7 +124,7 @@
 
                     <div class="text-center">
                         <p class="mb-0">
-                            Want to become an Instructor?
+                            Want to become an instructor?
                             <a asp-action="Register" asp-controller="Instructor" class="auth-link-instructor">Register as Instructor</a>
                         </p>
                     </div>
@@ -104,7 +133,6 @@
         </div>
     </div>
 
-    {{/* ?? JavaScript files must be added here */}}
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

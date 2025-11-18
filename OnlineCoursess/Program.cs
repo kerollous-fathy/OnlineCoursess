@@ -1,11 +1,22 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using OnlineCoursess.Context;
+using Microsoft.AspNetCore.Localization; // added for localization
+using System.Globalization; // added for localization
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Localization: ensure Arabic (Egypt) culture is used and UTF-8 content negotiation remains consistent
+var supportedCultures = new[] { new CultureInfo("ar-EG") };
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("ar-EG");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 
 // DbContext
 builder.Services.AddDbContext<MyContext>(options =>
@@ -37,6 +48,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+// Apply localization settings early in the pipeline
+app.UseRequestLocalization();
+
 app.UseRouting();
 
 app.UseAuthentication();
@@ -48,6 +63,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

@@ -3,24 +3,60 @@ html {
   direction: rtl;
 }
 
+:root {
+  /* Core Palette */
+  --color-black-cat: #2E2F31; /* Dark Neutral */
+  --color-blue-blush: #D6DBD9; /* Light Gray Blue */
+  --color-marian: #49596B; /* Muted Blue */
+  --color-bone: #F2F0E9; /* Soft Off-White */
+  --color-midnight-indigo: #212842; /* Deep Navy */
+  --color-vanilla-cream: #F0E7D5; /* Warm Cream */
+  /* Semantic Mapping */
+  --color-bg-base: var(--color-blue-blush);
+  --color-bg-alt: var(--color-vanilla-cream);
+  --color-bg-card: #FFFFFF;
+  --color-text-primary: var(--color-midnight-indigo);
+  --color-text-secondary: var(--color-black-cat);
+  --color-border-soft: #ddd;
+  --color-accent: var(--color-marian);
+  --color-accent-strong: var(--color-midnight-indigo);
+  --color-danger: #E84C3D;
+}
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+  html { font-size: 16px; }
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Cairo','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   overflow-x: hidden;
-  background: linear-gradient(135deg, #d6dbd9 0%, #F0E7D5 50%, #d6dbd9 100%);
+  background: linear-gradient(135deg, var(--color-blue-blush) 0%, var(--color-vanilla-cream) 50%, var(--color-blue-blush) 100%);
   min-height: 100vh;
 }
+
+/* === Registration Page Pattern Background (clean) === */
+body.page-register {
+  /* Updated to existing SVG pattern path */
+  background: #ffffff url('/images/patterns/education-pattern.svg') repeat fixed center center;
+  background-size: 420px auto;
+}
+body.page-register .auth-container { background: transparent; }
+/* Hide old overlay layers so pattern is visible */
+body.page-register .icon-pattern-layer,
+body.page-register .vignette-overlay { display: none !important; }
+/* Optional soft radial for readability */
+body.page-register::before {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.82) 42%, rgba(240,231,213,0.55) 70%, rgba(73,89,107,0.20) 100%);
+}
+body.page-register .auth-wrapper { position:relative; z-index:1; }
+/* =============================================== */
 
 /* Navbar Styling */
 .navbar {
   padding: 1rem 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  background: #F0E7D5 !important;
+  background: var(--color-vanilla-cream) !important;
 }
 
 .navbar-brand {
@@ -38,19 +74,19 @@ body {
 }
 
 .navbar-nav .nav-link {
-  color: #212842;
+  color: var(--color-midnight-indigo);
   font-weight: 500;
   padding: 0.5rem 1rem;
   margin: 0 0.25rem;
 }
 
 .navbar-nav .nav-link:hover {
-  color: #2e2f31;
+  color: var(--color-black-cat);
 }
 
 .btn-login {
-  background: #212842;
-  color: #F0E7D5;
+  background: var(--color-midnight-indigo);
+  color: var(--color-vanilla-cream);
   border: none;
   padding: 0.5rem 2rem;
   border-radius: 25px;
@@ -58,13 +94,13 @@ body {
 }
 
 .btn-login:hover {
-  background: #2e2f31;
-  color: #F0E7D5;
+  background: var(--color-black-cat);
+  color: var(--color-vanilla-cream);
 }
 
 .btn-register {
-  border: 2px solid #212842;
-  color: #212842;
+  border: 2px solid var(--color-midnight-indigo);
+  color: var(--color-midnight-indigo);
   background: transparent;
   padding: 0.5rem 2rem;
   border-radius: 25px;
@@ -72,9 +108,9 @@ body {
 }
 
 .btn-register:hover {
-  background: #212842;
-  color: #F0E7D5;
-  border-color: #212842;
+  background: var(--color-midnight-indigo);
+  color: var(--color-vanilla-cream);
+  border-color: var(--color-midnight-indigo);
 }
 
 /* Hero Section */
@@ -176,14 +212,14 @@ body {
 .hero-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #212842;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
   line-height: 1.1;
 }
 
 .hero-subtitle {
   font-size: 1rem;
-  color: #2e2f31;
+  color: var(--color-black-cat);
   margin-bottom: 1.5rem;
 }
 
@@ -203,25 +239,25 @@ body {
 }
 
 .hero-buttons .btn-primary {
-  background: #212842;
+  background: var(--color-midnight-indigo);
   border: none;
-  color: #F0E7D5;
+  color: var(--color-vanilla-cream);
 }
 
 .hero-buttons .btn-primary:hover {
-  background: #2e2f31;
-  color: #F0E7D5;
+  background: var(--color-black-cat);
+  color: var(--color-vanilla-cream);
 }
 
 .hero-buttons .btn-outline-primary {
-  border: 2px solid #212842;
-  color: #212842;
+  border: 2px solid var(--color-midnight-indigo);
+  color: var(--color-midnight-indigo);
   background: white;
 }
 
 .hero-buttons .btn-outline-primary:hover {
-  background: #212842;
-  color: #F0E7D5;
+  background: var(--color-midnight-indigo);
+  color: var(--color-vanilla-cream);
 }
 
 /* Carousel Controls */
@@ -379,7 +415,7 @@ body {
 .newsletter-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #212842;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
 }
 
@@ -446,7 +482,7 @@ body {
 .testimonials-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #212842;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -494,7 +530,7 @@ body {
 .testimonial-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #212842;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -533,7 +569,7 @@ body {
 .courses-grid-title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #212842;
+  color: var(--color-text-primary);
   margin-bottom: 0.5rem;
 }
 
@@ -614,7 +650,7 @@ body {
 .course-card-title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #212842;
+  color: var(--color-text-primary);
   margin-bottom: 0.75rem;
   line-height: 1.4;
 }
@@ -724,7 +760,7 @@ body {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #212842;
+  box-shadow: 0 0 0 0.1rem #FFFFFF, 0 0 0 0.25rem var(--color-midnight-indigo);
 }
 
 /* Authentication Pages Styling */
@@ -733,476 +769,100 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+  background: linear-gradient(135deg, var(--color-blue-blush) 0%, var(--color-bone) 50%, var(--color-blue-blush) 100%);
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
-
-.auth-wrapper {
-  width: 100%;
-  max-width: 450px;
-  animation: fadeInUp 0.6s ease-out;
+.auth-container::before { /* keep subtle radial base shading */
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(33,40,66,0.12) 0%, rgba(33,40,66,0.05) 30%, transparent 65%),
+    radial-gradient(circle at 50% 65%, rgba(73,89,107,0.15) 0%, rgba(73,89,107,0.07) 40%, transparent 70%),
+    linear-gradient(135deg, rgba(78,86,94,0.15) 0%, rgba(78,86,94,0) 60%);
+  pointer-events:none;
 }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Geometric shapes previously used (can be removed if not needed) */
+.auth-decoration { position: absolute; inset: 0; pointer-events:none; }
+/* Arabic Register Page Specific Enhancements */
+body.page-register { font-family: 'Cairo','Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+.page_register .auth-container { background: radial-gradient(circle at center, var(--color-bone) 0%, var(--color-blue-blush) 100%); }
+/* Icon pattern (requires images placed at wwwroot/images/icons/mentor.png & graduate.png) */
+.page-register .icon-pattern-layer {
+  position:absolute; inset:0; pointer-events:none; opacity:0.22;
+  background-image:url('/images/icons/mentor.png'), url('/images/icons/graduate.png');
+  background-size:160px 160px, 180px 180px;
+  background-repeat:repeat;
+  background-position:0 0, 90px 90px;
+  mix-blend-mode:normal;
+  filter:contrast(105%) brightness(105%);
 }
+/* Vignette + spotlight to make form pop */
+.page-register .vignette-overlay {
+  position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(circle at center, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.75) 35%, rgba(240,231,213,0.55) 55%, rgba(73,89,107,0.25) 75%, rgba(33,40,66,0.35) 90%),
+    linear-gradient(135deg, rgba(73,89,107,0.15) 0%, rgba(73,89,107,0.05) 60%, rgba(240,231,213,0.25) 100%);
+  backdrop-filter: blur(3px);
+}
+/* Extra shadow halo behind form */
+.page-register .auth-container::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background: radial-gradient(circle at center, rgba(73,89,107,0.35) 0%, rgba(73,89,107,0.12) 40%, transparent 70%);
+  filter:blur(60px); opacity:.35;
+}
+.page-register .auth-wrapper { position:relative; z-index:3; }
 
 .auth-box {
-  background: white;
-  border-radius: 20px;
-  padding: 2.5rem 2rem;
-  box-shadow: 0 10px 50px rgba(33, 40, 66, 0.2);
-  border-top: 4px solid #4A90E2;
+  position: relative; /* allow pseudo under-shadow */
+  box-shadow: 0 12px 30px -10px rgba(0,0,0,0.18), 0 4px 12px -3px rgba(0,0,0,0.12); /* refined softer shadow */
 }
-
-.auth-box-login {
-  border-top-color: #2E7D9E;
-}
-
-.auth-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.auth-title {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #212842;
-  margin-bottom: 0.5rem;
-}
-
-.auth-subtitle {
-  font-size: 0.95rem;
-  color: #999;
-  margin: 0;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group {
-  position: relative;
-}
-
-.form-label {
-  display: block;
-  font-weight: 600;
-  color: #212842;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-}
-
-.form-control {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  transition: all 0.3s ease;
-  background: #f9f9f9;
-}
-
-.form-control:focus {
-  outline: none;
-  background: white;
-  border-color: #4A90E2;
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-}
-
-.form-control::placeholder {
-  color: #ccc;
-}
-
-textarea.form-control {
-  resize: vertical;
-  font-family: inherit;
-}
-
-.text-danger {
-  color: #E84C3D !important;
-  display: block;
-  margin-top: 0.25rem;
-}
-
-.form-check {
-  display: flex;
-  align-items: center;
-}
-
-.form-check-input {
-  width: 18px;
-  height: 18px;
-  margin-right: 0.5rem;
-  cursor: pointer;
-  accent-color: #4A90E2;
-}
-
-.form-check-label {
-  cursor: pointer;
-  color: #2e2f31;
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-/* Buttons */
-.btn-register-submit,
-.btn-login-submit,
-.btn-register-instructor-submit,
-.btn-login-instructor-submit {
-  padding: 0.9rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-register-submit,
-.btn-register-instructor-submit {
-  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
-  color: white;
-}
-
-.btn-register-submit:hover,
-.btn-register-instructor-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(74, 144, 226, 0.3);
-}
-
-.btn-login-submit,
-.btn-login-instructor-submit {
-  background: linear-gradient(135deg, #2E7D9E 0%, #1E5A7A 100%);
-  color: white;
-}
-
-.btn-login-submit:hover,
-.btn-login-instructor-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(46, 125, 158, 0.3);
-}
-
-/* Links and Footer */
-.auth-footer {
-  text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #f0f0f0;
-}
-
-.auth-footer p {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.auth-link,
-.auth-link-instructor,
-.auth-link-student,
-.auth-link-secondary {
-  color: #4A90E2;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.auth-link:hover,
-.auth-link-instructor:hover,
-.auth-link-student:hover {
-  color: #357ABD;
-  text-decoration: underline;
-}
-
-.auth-link-secondary {
-  color: #999;
-  font-weight: 500;
-}
-
-.auth-link-secondary:hover {
-  color: #666;
-}
-
-.auth-divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: #ddd;
-  font-size: 0.9rem;
-}
-
-.auth-divider::before,
-.auth-divider::after {
+.auth-box::after { /* subtle shadow plate underneath */
   content: '';
-  flex: 1;
-  height: 1px;
-  background: #ddd;
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: -12px;
+  height: 28px;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 65%);
+  filter: blur(4px);
+  opacity: .55;
+  z-index: -1;
+  pointer-events: none;
 }
 
-.auth-divider span {
-  color: #999;
+/* Enhance auth-box for English design variant */
+.auth-box-english {
+  max-width: 430px;
+  margin: 0 auto;
+  border-radius: 22px;
+  padding: 2.25rem 2rem 2.5rem;
+  background: #ffffff;
+  border: 2px solid rgba(0,102,255,0.35);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.08), 0 12px 40px -10px rgba(0,0,0,0.18);
 }
-
-/* Alert Styling */
-.alert {
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1.5rem;
-  font-size: 0.9rem;
+.auth-box-english .auth-title { font-size:1.55rem; font-weight:700; }
+.auth-box-english .auth-subtitle { font-size:.85rem; color:#6c757d; }
+.auth-box-english .form-control { background:#f8f9fa; border:1px solid #e1e5ea; }
+.auth-box-english .form-control:focus { background:#fff; border-color:#0d6efd; box-shadow:0 0 0 3px rgba(13,110,253,.15); }
+.auth-box-english .btn-register-submit { background:linear-gradient(90deg,#0d6efd,#174d9c); }
+.auth-box-english .btn-register-submit:hover { filter:brightness(1.05); }
+/* Override register page background to use education pattern image */
+.page-register .auth-container {
+  background: #ffffff url('/images/patterns/education-pattern.png') repeat;
+  background-size: 520px auto; /* adjust tile size */
 }
+/* Soften pattern with existing vignette overlay (already defined) */
+.page-register .vignette-overlay { mix-blend-mode: normal; }
 
-.alert-danger {
-  background-color: #FFF5F5;
-  border: 1px solid #FFE0E0;
-  color: #E84C3D;
+/* === Added: make full page use pattern, show through, reduce overlays === */
+body.page-register {
+  background: #ffffff url('/images/patterns/education-pattern.png') repeat fixed center center;
+  background-size: 700px auto;
 }
-
-/* Responsive */
-@media (max-width: 991px) {
-  .newsletter-title {
-    font-size: 2rem;
-  }
-
-  .testimonials-title {
-    font-size: 2rem;
-  }
-
-  .courses-grid-title {
-    font-size: 2rem;
-  }
-
-  .newsletter-form {
-    flex-direction: column;
-  }
-
-  .btn-newsletter {
-    padding: 0.8rem 2rem;
-  }
-
-  .watch-courses-section {
-    padding: 40px 0;
-  }
-
-  .auth-container {
-    padding: 10px;
-  }
-
-  .auth-wrapper {
-    max-width: 100%;
-  }
-
-  .auth-box {
-    padding: 1.5rem 1rem;
-  }
-
-  .auth-title {
-    font-size: 1.5rem;
-  }
-
-  .auth-subtitle {
-    font-size: 0.85rem;
-  }
-
-  .form-label {
-    font-size: 0.85rem;
-  }
-
-  .form-control {
-    padding: 0.65rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .btn-register-submit,
-  .btn-login-submit,
-  .btn-register-instructor-submit,
-  .btn-login-instructor-submit {
-    padding: 0.8rem 1.2rem;
-    font-size: 0.95rem;
-  }
-
-  .auth-footer p {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .newsletter-section {
-    padding: 60px 0;
-  }
-
-  .newsletter-title {
-    font-size: 1.75rem;
-  }
-
-  .newsletter-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .newsletter-form {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .newsletter-input {
-    padding: 0.8rem 1rem;
-    font-size: 0.95rem;
-  }
-
-  .btn-newsletter {
-    padding: 0.8rem 1.5rem;
-  }
-
-  .testimonials-section {
-    padding: 60px 0;
-  }
-
-  .testimonials-title {
-    font-size: 1.75rem;
-  }
-
-  .testimonial-card {
-    padding: 1.5rem 1rem;
-  }
-
-  .courses-grid-section {
-    padding: 60px 0;
-  }
-
-  .courses-grid-title {
-    font-size: 1.75rem;
-  }
-
-  .course-card-content {
-    padding: 1rem;
-  }
-
-  .course-card-title {
-    font-size: 1rem;
-  }
-
-  .course-card-description {
-    font-size: 0.8rem;
-  }
-
-  .course-card-meta {
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    margin-bottom: 1rem;
-  }
-}
-
-@media (max-width: 576px) {
-  .newsletter-section {
-    padding: 40px 0;
-  }
-
-  .newsletter-title {
-    font-size: 1.5rem;
-  }
-
-  .newsletter-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .newsletter-input {
-    padding: 0.7rem 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .btn-newsletter {
-    padding: 0.7rem 1.5rem;
-    font-size: 0.85rem;
-  }
-
-  .testimonials-section {
-    padding: 40px 0;
-  }
-
-  .testimonials-title {
-    font-size: 1.5rem;
-  }
-
-  .testimonials-subtitle {
-    font-size: 0.85rem;
-  }
-
-  .testimonial-card {
-    padding: 1.25rem 1rem;
-  }
-
-  .testimonial-avatar {
-    width: 70px;
-    height: 70px;
-  }
-
-  .testimonial-text {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-
-  .courses-grid-section {
-    padding: 40px 0;
-  }
-
-  .courses-grid-title {
-    font-size: 1.5rem;
-  }
-
-  .courses-grid-subtitle,
-  .courses-grid-description {
-    font-size: 0.85rem;
-  }
-
-  .course-image-container {
-    height: 180px;
-  }
-
-  .course-badge,
-  .course-sale-badge {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.7rem;
-  }
-
-  .course-card-content {
-    padding: 0.8rem;
-  }
-
-  .course-card-title {
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .course-card-description {
-    display: none;
-  }
-
-  .course-card-meta {
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    margin-bottom: 0.8rem;
-  }
-
-  .course-card-footer {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .course-actions {
-    gap: 0.5rem;
-  }
-
-  .course-action-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 0.85rem;
-  }
-}
+/* Transparent container so pattern shows; keep layout spacing */
+body.page-register .auth-container { background: transparent; }
+/* Hide internal pattern + vignette layers (optional if they obscure pattern) */
+body.page-register .icon-pattern-layer,
+body.page_register .vignette-overlay { display: none !important; }
