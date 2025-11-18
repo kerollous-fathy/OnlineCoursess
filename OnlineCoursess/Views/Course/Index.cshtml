@@ -8,7 +8,7 @@
 
 <div class="container my-4">
 
-    @* 💡 Tabs for switching between All and Enrolled (only when signed in) *@
+    @* Tabs for switching between All and Enrolled (only when signed in) *@
     @if (User.Identity.IsAuthenticated)
     {
         <div class="d-flex justify-content-center mb-4">
@@ -39,22 +39,35 @@
     {
         @foreach (var course in Model)
         {
-            // 1. حساب متوسط التقييم (نفس المنطق السابق)
             var avgRating = course.Reviews != null && course.Reviews.Any()
-            ? course.Reviews.Average(r => r.Rating)
-            : 0;
+                ? course.Reviews.Average(r => r.Rating)
+                : 0;
+
+            // Icon selection based on category/title
+            string iconFile = "default.jpg"; // fallback (expects /images/courses/default.jpg)
+            if (course.Category.CategoryName == "Design")
+            {
+                if (course.Title.Contains("Figma", StringComparison.OrdinalIgnoreCase)) iconFile = "figma.jpg";
+                else if (course.Title.Contains("Illustrator", StringComparison.OrdinalIgnoreCase)) iconFile = "illustrator.png";
+            }
+            else if (course.Category.CategoryName == "Programming")
+            {
+                if (course.Title.Contains("ASP.NET", StringComparison.OrdinalIgnoreCase)) iconFile = "NET core.png";
+                else if (course.Title.Contains("Data Science", StringComparison.OrdinalIgnoreCase)) iconFile = "NET core.png"; // use same programming icon
+            }
+            else if (course.Category.CategoryName == "Business")
+            {
+                iconFile = "markteing.png"; // marketing icon
+            }
 
             <div class="col-md-4 mb-5">
                 <div class="card course-card shadow-sm">
-                    @* 💡 صورة الدورة *@
-                    <img src="~/images/courses/default.jpg" class="card-img-top" alt="@course.Title">
+                    <img src="~/images/courses_icons/@iconFile" class="card-img-top" alt="@course.Title">
 
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-2">
-                            @* 💡 التصنيف *@
                             <span class="badge bg-primary">@course.Category.CategoryName</span>
 
-                            @* 💡 التقييم وعدد المراجعات *@
                             @if (avgRating > 0)
                             {
                                 <span class="text-warning small"><i class="fas fa-star"></i> @avgRating.ToString("F1") (@course.Reviews.Count)</span>
@@ -67,7 +80,6 @@
 
                         <h5 class="card-title">@course.Title</h5>
 
-                        @* 💡 تفاصيل إضافية (المدة والمستوى) *@
                         <div class="course-meta mb-3">
                             <span class="text-muted small me-3"><i class="fas fa-clock"></i> @course.Duration Hrs</span>
                             <span class="text-muted small"><i class="fas fa-chart-line"></i> @course.Level</span>
@@ -77,10 +89,7 @@
                     </div>
 
                     <div class="card-footer d-flex justify-content-between align-items-center bg-white border-top-0">
-                        @* 💡 السعر *@
                         <span class="fs-5 fw-bold text-success">$@course.Price</span>
-
-                        @* زر عرض التفاصيل *@
                         <a asp-action="Details" asp-controller="Course" asp-route-id="@course.CourseId" class="btn btn-sm btn-outline-primary">View Details</a>
                     </div>
                 </div>
@@ -90,7 +99,5 @@
 </div>
 
 @section Scripts {
-    @{
-        // Add any JavaScript for filtering or searching here
-    }
+    @{ /* extra scripts if needed */ }
 }

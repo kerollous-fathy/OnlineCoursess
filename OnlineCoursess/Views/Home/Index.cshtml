@@ -1,30 +1,30 @@
-﻿@model OnlineCourses.ViewModels.LandingPageViewModel
+@model OnlineCourses.ViewModels.LandingPageViewModel
 @{
     ViewData["Title"] = "الصفحة الرئيسية";
 }
 
 <section class="hero-section">
     <div class="hero-slider-background">
-        <div id="heroImageSlider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div id="heroImageSlider" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="slider-image-wrapper">
-                        <img src="~/images/slider/image1.jpg" class="d-block w-100" alt="معلم يشرح للطلاب">
+                        <img src="~/images/slider/slider1.jpg" asp-append-version="true" class="d-block w-100" alt="معلم يشرح للطلاب" loading="eager">
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="slider-image-wrapper">
-                        <img src="~/images/slider/image2.jpg" class="d-block w-100" alt="عرض تقديمي">
+                        <img src="~/images/slider/slider2.jpg" asp-append-version="true" class="d-block w-100" alt="عرض تقديمي" loading="lazy">
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="slider-image-wrapper">
-                        <img src="~/images/slider/image3.jpg" class="d-block w-100" alt="قاعة محاضرات">
+                        <img src="~/images/slider/slider3.jpg" asp-append-version="true" class="d-block w-100" alt="قاعة محاضرات" loading="lazy">
                     </div>
                 </div>
                 <div class="carousel-item">
                     <div class="slider-image-wrapper">
-                        <img src="~/images/slider/image4.jpg" class="d-block w-100" alt="محاضرة تفاعلية">
+                        <img src="~/images/slider/slider4.jpg" asp-append-version="true" class="d-block w-100" alt="محاضرة تفاعلية" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -36,6 +36,16 @@
                 <button type="button" data-bs-target="#heroImageSlider" data-bs-slide-to="2" aria-label="Slide 3"></button>
                 <button type="button" data-bs-target="#heroImageSlider" data-bs-slide-to="3" aria-label="Slide 4"></button>
             </div>
+
+            <!-- Prev/Next controls for manual navigation -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroImageSlider" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">السابق</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroImageSlider" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">التالي</span>
+            </button>
         </div>
     </div>
 
@@ -57,48 +67,14 @@
     </div>
 </section>
 
-<section class="features-section">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card feature-card-blue">
-                    <div class="feature-icon">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <h3 class="feature-title">خطط واضحة</h3>
-                    <p class="feature-description">نوفر لك تجربة تعلم جذابة ومبنية على أسس واضحة، والموضوع، والسهل لفهم العملي لتطوير مستقبلك معنا.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <h3 class="feature-title">مهارات جديدة</h3>
-                    <p class="feature-description">تعلم من خلال المحتوى عبر مكتبة واسعة من الدورات المتنوعة التي تناسب جميع المستويات.</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3 class="feature-title">وفر الوقت والجهد!</h3>
-                    <p class="feature-description">منصة تعليمية متكاملة تقدم لك كل محتوى تحتاجه بسهولة وبدقة لتناسب المهارات بطريقة عملية وفعالة.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <section class="watch-courses-section">
     <div class="container-fluid">
         <div class="row align-items-center g-0">
             <div class="col-lg-5">
                 <div class="watch-courses-images">
                     <div class="course-image-group">
-                        <img src="~/images/courses/course1.jpg" alt="دورة تعليمية 1" class="course-img main-img">
-                        <img src="~/images/courses/course2.jpg" alt="دورة تعليمية 2" class="course-img overlay-img">
+                        <img src="~/images/land_page/slider%282%291.jpg" asp-append-version="true" alt="دورة تعليمية 1" class="course-img main-img">
+                        <img src="~/images/land_page/slider%282%292.jpg" asp-append-version="true" alt="دورة تعليمية 2" class="course-img overlay-img">
                     </div>
                 </div>
             </div>
@@ -128,16 +104,17 @@
             </div>
         </div>
         <div class="row g-4">
+            <!-- Left (in RTL: appears visually left) STUDENT: Sushi Mohamed -->
             <div class="col-lg-6">
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                        <img src="~/images/testimonials/user1.jpg" alt="Regina Miles" class="testimonial-avatar">
+                        <img src="~/images/humans/human1.jpeg" alt="طالب" class="testimonial-avatar">
                         <div class="testimonial-info">
-                            <h5 class="testimonial-name">Regina Miles</h5>
-                            <p class="testimonial-role">طالبة</p>
+                            <h5 class="testimonial-name">kerollous fathy</h5>
+                            <p class="testimonial-role">طالب</p>
                         </div>
                     </div>
-                    <p class="testimonial-text">الدروس هنا لأفضل مشروع تصميم لم أجربها ساحتًا أول مشروع تصميم لي الى الآن.</p>
+                    <p class="testimonial-text">الدروس هنا لأفضل مشروع تصميم لم أجربها سابقًا أول مشروع تصميم لي إلى الآن.</p>
                     <div class="testimonial-rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
@@ -147,157 +124,23 @@
                     </div>
                 </div>
             </div>
+            <!-- Right (in RTL: appears visually right) INSTRUCTOR: Kellous Fathey -->
             <div class="col-lg-6">
                 <div class="testimonial-card">
                     <div class="testimonial-header">
-                        <img src="~/images/testimonials/user2.jpg" alt="Regina Miles" class="testimonial-avatar">
+                        <img src="~/images/humans/human2.png" alt="محاضر" class="testimonial-avatar">
                         <div class="testimonial-info">
-                            <h5 class="testimonial-name">Regina Miles</h5>
+                            <h5 class="testimonial-name">sushi mohamed</h5>
                             <p class="testimonial-role">محاضر</p>
                         </div>
                     </div>
-                    <p class="testimonial-text">أنا هنا لاجل عملية التعليم وسهلة وممتعة ساريتشكم خطة كاملة على التطبيق والمواقع والتطبيقات</p>
+                    <p class="testimonial-text">أنا هنا لأجل عملية تعليم سهلة وممتعة سأريكم خطة كاملة على التطبيق والمواقع والتطبيقات.</p>
                     <div class="testimonial-rating">
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Courses Section -->
-<section class="courses-grid-section">
-    <div class="container">
-        <div class="row text-center mb-5">
-            <div class="col-lg-12">
-                <h2 class="courses-grid-title">تعلم من أي مكان</h2>
-                <p class="courses-grid-subtitle">كل ما تحتاجه لتتقدم في مسارك المهني في مكان واحد.</p>
-                <p class="courses-grid-description">تعلم من أي وقت، والمسية في تطبيقات.</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6">
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="~/images/courses/design-course.jpg" alt="تصميم واجهات المستخدم" class="course-card-image">
-                        <div class="course-badge">أفضل تقييم</div>
-                        <div class="course-sale-badge">Sale</div>
-                    </div>
-                    <div class="course-card-content">
-                        <h4 class="course-card-title">تصميم واجهات المستخدم</h4>
-                        <p class="course-card-description">كورس عملي يشمل أساسيات تصميم واجهات المستخدم باستخدام Figma، لتتمكن من إنشاء تصاميم حديثة واحترافية للمواقع والتطبيقات.</p>
-                        <div class="course-card-meta">
-                            <span class="course-duration"><i class="fas fa-clock me-1"></i>22 ساعة</span>
-                            <span class="course-students"><i class="fas fa-users me-1"></i>64 محاضرة</span>
-                            <span class="course-level"><i class="fas fa-chart-line me-1"></i></span>
-                        </div>
-                        <div class="course-card-footer">
-                            <div class="course-pricing">
-                                <span class="course-price-original">$16.48</span>
-                                <span class="course-price-sale">$6.48</span>
-                            </div>
-                            <a href="#" class="btn btn-discover-more">المزيد</a>
-                        </div>
-                        <div class="course-actions">
-                            <button class="course-action-btn" title="أضف للمفضلة"><i class="fas fa-heart"></i></button>
-                            <button class="course-action-btn" title="أضف للسلة"><i class="fas fa-shopping-cart"></i></button>
-                            <button class="course-action-btn" title="عرض"><i class="fas fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="~/images/courses/design-course.jpg" alt="تصميم واجهات المستخدم" class="course-card-image">
-                        <div class="course-badge">أفضل تقييم</div>
-                        <div class="course-sale-badge">Sale</div>
-                    </div>
-                    <div class="course-card-content">
-                        <h4 class="course-card-title">تصميم واجهات المستخدم</h4>
-                        <p class="course-card-description">كورس عملي يشمل أساسيات تصميم واجهات المستخدم باستخدام Figma، لتتمكن من إنشاء تصاميم حديثة واحترافية للمواقع والتطبيقات.</p>
-                        <div class="course-card-meta">
-                            <span class="course-duration"><i class="fas fa-clock me-1"></i>22 ساعة</span>
-                            <span class="course-students"><i class="fas fa-users me-1"></i>64 محاضرة</span>
-                            <span class="course-level"><i class="fas fa-chart-line me-1"></i></span>
-                        </div>
-                        <div class="course-card-footer">
-                            <div class="course-pricing">
-                                <span class="course-price-original">$16.48</span>
-                                <span class="course-price-sale">$6.48</span>
-                            </div>
-                            <a href="#" class="btn btn-discover-more">المزيد</a>
-                        </div>
-                        <div class="course-actions">
-                            <button class="course-action-btn" title="أضف للمفضلة"><i class="fas fa-heart"></i></button>
-                            <button class="course-action-btn" title="أضف للسلة"><i class="fas fa-shopping-cart"></i></button>
-                            <button class="course-action-btn" title="عرض"><i class="fas fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="~/images/courses/design-course.jpg" alt="تصميم واجهات المستخدم" class="course-card-image">
-                        <div class="course-badge">أفضل تقييم</div>
-                        <div class="course-sale-badge">Sale</div>
-                    </div>
-                    <div class="course-card-content">
-                        <h4 class="course-card-title">تصميم واجهات المستخدم</h4>
-                        <p class="course-card-description">كورس عملي يشمل أساسيات تصميم واجهات المستخدم باستخدام Figma، لتتمكن من إنشاء تصاميم حديثة واحترافية للمواقع والتطبيقات.</p>
-                        <div class="course-card-meta">
-                            <span class="course-duration"><i class="fas fa-clock me-1"></i>22 ساعة</span>
-                            <span class="course-students"><i class="fas fa-users me-1"></i>64 محاضرة</span>
-                            <span class="course-level"><i class="fas fa-chart-line me-1"></i></span>
-                        </div>
-                        <div class="course-card-footer">
-                            <div class="course-pricing">
-                                <span class="course-price-original">$16.48</span>
-                                <span class="course-price-sale">$6.48</span>
-                            </div>
-                            <a href="#" class="btn btn-discover-more">المزيد</a>
-                        </div>
-                        <div class="course-actions">
-                            <button class="course-action-btn" title="أضف للمفضلة"><i class="fas fa-heart"></i></button>
-                            <button class="course-action-btn" title="أضف للسلة"><i class="fas fa-shopping-cart"></i></button>
-                            <button class="course-action-btn" title="عرض"><i class="fas fa-eye"></i></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="course-card">
-                    <div class="course-image-container">
-                        <img src="~/images/courses/design-course.jpg" alt="تصميم واجهات المستخدم" class="course-card-image">
-                        <div class="course-badge">أفضل تقييم</div>
-                        <div class="course-sale-badge">Sale</div>
-                    </div>
-                    <div class="course-card-content">
-                        <h4 class="course-card-title">تصميم واجهات المستخدم</h4>
-                        <p class="course-card-description">كورس عملي يشمل أساسيات تصميم واجهات المستخدم باستخدام Figma، لتتمكن من إنشاء تصاميم حديثة واحترافية للمواقع والتطبيقات.</p>
-                        <div class="course-card-meta">
-                            <span class="course-duration"><i class="fas fa-clock me-1"></i>22 ساعة</span>
-                            <span class="course-students"><i class="fas fa-users me-1"></i>64 محاضرة</span>
-                            <span class="course-level"><i class="fas fa-chart-line me-1"></i></span>
-                        </div>
-                        <div class="course-card-footer">
-                            <div class="course-pricing">
-                                <span class="course-price-original">$16.48</span>
-                                <span class="course-price-sale">$6.48</span>
-                            </div>
-                            <a href="#" class="btn btn-discover-more">المزيد</a>
-                        </div>
-                        <div class="course-actions">
-                            <button class="course-action-btn" title="أضف للمفضلة"><i class="fas fa-heart"></i></button>
-                            <button class="course-action-btn" title="أضف للسلة"><i class="fas fa-shopping-cart"></i></button>
-                            <button class="course-action-btn" title="عرض"><i class="fas fa-eye"></i></button>
-                        </div>
                     </div>
                 </div>
             </div>
